@@ -1,0 +1,98 @@
+{
+	"common": {
+		"name": "syrconnect",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "Syr Connect",
+		"titleLang": {
+			"en": "Syr Connect",
+			"de": "Syr Connect",
+			"ru": "Syr Connect",
+			"pt": "Syr Connect",
+			"nl": "Syr Connect",
+			"fr": "Syr Connect",
+			"it": "Syr Connect",
+			"es": "Syr Connect",
+			"pl": "Syr Connect",
+			"zh-cn": "锡尔连接"
+		},
+		"desc": {
+			"en": "syrconnect",
+			"de": "syrconnect",
+			"ru": "syrconnect",
+			"pt": "syrconnect",
+			"nl": "syrconnect",
+			"fr": "Syrconnect",
+			"it": "syrconnect",
+			"es": "syrconnect",
+			"pl": "syrconnect",
+			"zh-cn": "syrconnect"
+		},
+		"authors": [
+			"eifel-tech <tw73149315m@gmx.net>"
+		],
+		"keywords": [
+			"ioBroker",
+			"template",
+			"Smart Home",
+			"home automation"
+		],
+		"license": "MIT",
+		"platform": "Javascript/Node.js",
+		"main": "main.js",
+		"icon": "syrconnect.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/eifel-tech/ioBroker.syrconnect/master/admin/syrconnect.png",
+		"readme": "https://github.com/eifel-tech/ioBroker.syrconnect/blob/master/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "household",
+		"compact": true,
+		"connectionType": "local",
+		"dataSource": "push",
+		"materialize": true,
+		"materializeTab": true,
+		"adminTab": {
+			"singleton": true,
+			"name": {
+				"en": "Syr Connect",
+				"de": "Syr Connect",
+				"ru": "Syr Connect",
+				"pt": "Syr Connect",
+				"nl": "Syr Connect",
+				"fr": "Syr Connect",
+				"it": "Syr Connect",
+				"es": "Syr Connect",
+				"pl": "Syr Connect",
+				"zh-cn": "锡尔连接"
+			},
+			"link": "",
+			"fa-icon": "info"
+		},
+		"supportCustoms": true,
+		"dependencies": [
+			{
+				"js-controller": ">=2.0.0"
+			}
+		]
+	},
+	"native": {
+		"option1": true,
+		"dnsport": "53"
+	},
+	"objects": [],
+	"instanceObjects": []
+}

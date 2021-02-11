@@ -1,0 +1,82 @@
+{
+  "_from": "file:/home/tobias/iobroker.syrconnect-0.0.1.tgz",
+  "_id": "iobroker.syrconnect@0.0.1",
+  "_inBundle": false,
+  "_integrity": "sha512-+TueJXFyyZ99cdliO9DsgJbL7I72Qx/oE+mzsokZLvUh3gHjNP71Xmaaeioj7p8QLwzl28iefd9R4G3RaUrZtA==",
+  "_location": "/iobroker.syrconnect",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "file",
+    "where": "/opt/iobroker",
+    "raw": "/home/tobias/iobroker.syrconnect-0.0.1.tgz",
+    "rawSpec": "/home/tobias/iobroker.syrconnect-0.0.1.tgz",
+    "saveSpec": "file:/home/tobias/iobroker.syrconnect-0.0.1.tgz",
+    "fetchSpec": "/home/tobias/iobroker.syrconnect-0.0.1.tgz"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "/home/tobias/iobroker.syrconnect-0.0.1.tgz",
+  "_shasum": "f3e95d4a1f58f001c803d9e2ae3c96ec3a40d78f",
+  "_spec": "/home/tobias/iobroker.syrconnect-0.0.1.tgz",
+  "_where": "/opt/iobroker",
+  "author": {
+    "name": "eifel-tech",
+    "email": "tw73149315m@gmx.net"
+  },
+  "bugs": {
+    "url": "https://github.com/eifel-tech/ioBroker.syrconnect/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "@iobroker/adapter-core": "^2.4.0"
+  },
+  "deprecated": false,
+  "description": "syrconnect",
+  "devDependencies": {
+    "@iobroker/testing": "^2.4.2",
+    "@types/chai": "^4.2.14",
+    "@types/chai-as-promised": "^7.1.3",
+    "@types/gulp": "^4.0.8",
+    "@types/mocha": "^8.2.0",
+    "@types/node": "^14.14.25",
+    "@types/proxyquire": "^1.3.28",
+    "@types/sinon": "^9.0.10",
+    "@types/sinon-chai": "^3.2.5",
+    "axios": "^0.21.1",
+    "chai": "^4.3.0",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^7.19.0",
+    "gulp": "^4.0.2",
+    "mocha": "^8.2.1",
+    "proxyquire": "^2.1.3",
+    "sinon": "^9.2.4",
+    "sinon-chai": "^3.5.0",
+    "typescript": "^4.1.3"
+  },
+  "homepage": "https://github.com/eifel-tech/ioBroker.syrconnect",
+  "keywords": [
+    "ioBroker",
+    "template",
+    "Smart Home",
+    "home automation"
+  ],
+  "license": "MIT",
+  "main": "main.js",
+  "name": "iobroker.syrconnect",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eifel-tech/ioBroker.syrconnect.git"
+  },
+  "scripts": {
+    "check": "tsc --noEmit -p tsconfig.check.json",
+    "lint": "eslint",
+    "test": "npm run test:js && npm run test:package",
+    "test:integration": "mocha test/integration --exit",
+    "test:js": "mocha --config test/mocharc.custom.json \"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\"",
+    "test:package": "mocha test/package --exit",
+    "test:unit": "mocha test/unit --exit"
+  },
+  "version": "0.0.1"
+}
