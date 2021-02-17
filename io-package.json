@@ -90,8 +90,7 @@
 		]
 	},
 	"native": {
-		"option1": true,
-		"dnsport": "53"
+		"webport": "8090"
 	},
 	"objects": [],
 	"instanceObjects": []
