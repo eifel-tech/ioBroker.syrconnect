@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "syrconnect",
-		"version": "0.0.1",
+		"version": "0.0.2",
 		"news": {
+			"0.0.2": {
+				"en": "",
+				"de": "Konfigurierbarer Host im Adminbereich",
+				"ru": "",
+				"pt": "",
+				"nl": "",
+				"fr": "",
+				"it": "",
+				"es": "",
+				"pl": "",
+				"zh-cn": ""
+			},
 			"0.0.1": {
 				"en": "initial release",
 				"de": "Erstveröffentlichung",
@@ -90,6 +102,7 @@
 		]
 	},
 	"native": {
+		"host": "localhost",
 		"webport": "8090"
 	},
 	"objects": [],

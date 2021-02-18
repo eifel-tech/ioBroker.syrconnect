@@ -35,6 +35,9 @@ Da iobroker aber nicht als <code>root</code> ausgeführt wird, ist dies z.Zt. ni
 ### 0.0.1
 * (eifel-tech) initial release
 
+### 0.0.2
+* (eifel-tech) Konfigurierbarer Host in Adminbereich
+
 ## License
 MIT License
 

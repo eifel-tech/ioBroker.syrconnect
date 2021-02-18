@@ -230,7 +230,7 @@ function getXmlAllC() {
 async function initWebServer(settings) {
 	const server = express();
 	
-	server.listen(parseInt(settings.webport, 10) || 8090);
+	server.listen(parseInt(settings.webport, 10) || 8090, settings.host);
 	
 	// for parsing application/x-www-form-urlencoded
 	server.use(express.urlencoded({extended: true})); 
@@ -299,7 +299,7 @@ async function initWebServer(settings) {
 
 async function main() {
 	initWebServer(adapter.config).then(() => {
-        adapter.log.info("Webserver started listening on port " + adapter.config.webport);
+        adapter.log.info("Webserver started listening on " + adapter.config.host + ":" + adapter.config.webport);
     }).catch(err => {
         adapter.log.error("Failed to initWebServer: " + err);
         adapter.terminate ? adapter.terminate(utils.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION) : process.exit(utils.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
