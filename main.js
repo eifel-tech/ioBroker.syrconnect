@@ -36,12 +36,12 @@ meta.set("getDWF", ["Durchschnittlicher Tageswasserverbrauch", nbr, "l", 0, 5000
 meta.set("getFCO", ["Eisengehalt", nbr, "ppm", 0, 100, 0, true]);
 meta.set("getFIR", ["", str, "", null, null, null, false]);
 meta.set("getFLO", ["Aktueller Wasserverbrauch", nbr, "l/min", 0, 100, 0, false]);
-meta.set("getHED", ["", nbr, "", null, null, null, false]);
-meta.set("getHEM", ["", nbr, "", null, null, null, false]);
-meta.set("getHEY", ["", nbr, "", null, null, null, false]);
-meta.set("getHSD", ["", nbr, "", null, null, null, false]);
-meta.set("getHSM", ["", nbr, "", null, null, null, false]);
-meta.set("getHSY", ["", nbr, "", null, null, null, false]);
+meta.set("getHED", ["Urlaub Beginn Tag", nbr, "", 1, 31, 1, true]);
+meta.set("getHEM", ["Urlaub Beginn Monat", nbr, "", 1, 12, 1, true]);
+meta.set("getHEY", ["Uralub Beginn Jahr", nbr, "", 0, 99, 0, true]);
+meta.set("getHSD", ["Urlaub Ende Tag", nbr, "", 1, 31, 1, true]);
+meta.set("getHSM", ["Urlaub Ende Monat", nbr, "", 1, 12, 1, true]);
+meta.set("getHSY", ["Urlaub Ende Jahr", nbr, "", 0, 99, 0, true]);
 meta.set("getIPH", ["", str, "", null, null, null, false]);
 meta.set("getIWH", ["Rohwasserhärte", nbr, "°dH", 1, 100, 21, true]);
 meta.set("getMAC", ["Mac-Adresse", str, "", null, null, null, false]);
