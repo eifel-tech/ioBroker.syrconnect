@@ -4,16 +4,16 @@
 		"version": "0.0.2",
 		"news": {
 			"0.0.2": {
-				"en": "",
+				"en": "Konfigurierbarer Host im Adminbereich",
 				"de": "Konfigurierbarer Host im Adminbereich",
-				"ru": "",
-				"pt": "",
-				"nl": "",
-				"fr": "",
-				"it": "",
-				"es": "",
-				"pl": "",
-				"zh-cn": ""
+				"ru": "Konfigurierbarer Host im Adminbereich",
+				"pt": "Konfigurierbarer Host im Adminbereich",
+				"nl": "Konfigurierbarer Host im Adminbereich",
+				"fr": "Konfigurierbarer Host im Adminbereich",
+				"it": "Konfigurierbarer Host im Adminbereich",
+				"es": "Konfigurierbarer Host im Adminbereich",
+				"pl": "Konfigurierbarer Host im Adminbereich",
+				"zh-cn": "Konfigurierbarer Host im Adminbereich"
 			},
 			"0.0.1": {
 				"en": "initial release",
