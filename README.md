@@ -25,7 +25,6 @@ und <code>/WebServices/SyrConnectLimexWebService.asmx/GetAllCommands</code> laus
 <code>iobroker-IP:8090/GetBasicCommands</code> bzw. <code>iobroker-IP:8090/GetAllCommands</code> weitergeleitet werden.
 
 ## TODOs
-* Setzen der Datenpunkte und Übermitteln an das Gerät.
 * Leider ist sowohl ein eigener DNS-Server, der auf <code>Port 53</code> lauscht, als auch ein Webserver für <code>Port 80</code> 
 bisher nicht möglich, in den Adapter zu implementieren, weil der Adapter dann mit Root-Rechten gestartet werden müsste.
 Da iobroker aber nicht als <code>root</code> ausgeführt wird, ist dies z.Zt. nicht möglich.

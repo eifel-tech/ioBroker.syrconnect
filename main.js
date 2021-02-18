@@ -135,11 +135,17 @@ function startAdapter(options) {
 		stateChange: (id, state) => {
 			// The state was changed by GUI
 			if(!state.ack) {
-				adapter.log.debug("state " + id + " changed: " + state.val + " (ack = " + state.ack + ")");
+				let val = state.val;
+				
+				adapter.log.debug("state " + id + " changed: " + val + " (ack = " + state.ack + ")");
 				
 				//Änderungen für Response merken
 				id = id.substr(id.lastIndexOf(".") + 1);
-				changed.set(id, state.val);
+				if(id == "getPRS"
+					|| id == "getFCO") {
+					val = val * 10;
+				}
+				changed.set(id, val);
 			}
 		},
 
@@ -165,7 +171,7 @@ function startAdapter(options) {
 async function createObjectWithState(name, value) {
 	let obj;
 	//String
-	if(meta.get(name)[1] === str) {
+	if(meta.get(name)[1] == str) {
 		obj = {
 	        _id: name,
 	        type: "state",
@@ -179,7 +185,7 @@ async function createObjectWithState(name, value) {
 	        native: {}
 	    };
 	//Number
-	} else if(meta.get(name)[1] === nbr) {
+	} else if(meta.get(name)[1] == nbr) {
 		obj = {
 		        _id: name,
 		        type: "state",
@@ -221,7 +227,14 @@ function getXmlAllC() {
 	let ret = "";
 	
 	for(let key of meta.keys()) {
-		ret += '<c n="' + key + '" v="' + (changed.has(key) ? changed.get(key) : "") + '"/>';
+		//Wenn der Datenpunkt geändert wurde, muss im Response-XML eine Zeile mit dem set statt get und dem
+		//neuen Value hinzugefügt werden.
+		if(changed.has(key)) {
+			ret += '<c n="' + key.replace(/get/g, "set") + '" v="' + changed.get(key) + '"/>';
+			changed.delete(key);
+		}
+		
+		ret += '<c n="' + key + '" v=""/>';
 	}
 	
 	return ret;
@@ -249,16 +262,11 @@ async function initWebServer(settings) {
 			let json = result.sc.d[0].c;
 			for(let i = 0; i < json.length; i++) {
 				let id = json[i].$.n;
-				//Der Wasserdruck wird als 10fache Menge übermittelt - muss aber als float interpretiert werden
+				//Eisengehalt und Wasserdruck werden als 10fache Menge übermittelt, müssen aber als float gespeichert werden
 				let newVal = json[i].$.v;
-				if(id === "getPRS"
-					|| id === "getFCO") {
+				if(id == "getPRS"
+					|| id == "getFCO") {
 					newVal = newVal / 10;
-				}
-
-				//TODO Setzen buggy?
-				if(id.length > 6) {
-					adapter.log.debug(id);
 				}
 				
 				//Objekte erzeugen und Values setzen, wenn es sich um neue Daten handelt
@@ -270,8 +278,8 @@ async function initWebServer(settings) {
 					let state = await adapter.getStateAsync(id);
 					if(state) {
 						let oldVal = state.val;
-						if((state.ack && oldVal !== newVal)
-								|| (!state.ack && oldVal === newVal)) {
+						if((state.ack && oldVal != newVal)
+								|| (!state.ack && oldVal == newVal)) {
 							adapter.setStateAsync(id, newVal, true);
 						}
 					}
@@ -291,7 +299,7 @@ async function initWebServer(settings) {
 		
 		adapter.log.debug("Response: " +  responseXml);
 		
-		changed.clear();
+		//changed.clear();
 	});
 	
 	return server;
