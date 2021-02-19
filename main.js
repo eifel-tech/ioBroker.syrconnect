@@ -129,7 +129,7 @@ function startAdapter(options) {
 		// is called if a subscribed state changes
 		stateChange: (id, state) => {
 			// The state was changed by GUI
-			if(!state.ack) {
+			if(state && !state.ack) {
 				let val = state.val;
 				
 				adapter.log.debug("state " + id + " changed: " + val + " (ack = " + state.ack + ")");
