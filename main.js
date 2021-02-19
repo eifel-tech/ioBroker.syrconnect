@@ -80,9 +80,7 @@ meta.set("getVS3", ["", nbr, "", null, null, null, false]);
 meta.set("getWHU", ["", nbr, "", null, null, null, false]);
 
 var changed = new Map();
-
-// Load your modules here, e.g.:
-// const fs = require("fs");
+var server;
 
 /**
  * The adapter instance
@@ -108,11 +106,8 @@ function startAdapter(options) {
 		unload: (callback) => {
 			try {
 				// Here you must clear all timeouts or intervals that may still be active
-				// clearTimeout(timeout1);
-				// clearTimeout(timeout2);
-				// ...
-				// clearInterval(interval1);
-
+				server.close();
+				
 				callback();
 			} catch (e) {
 				callback();
@@ -241,21 +236,21 @@ function getXmlAllC() {
 }
 
 async function initWebServer(settings) {
-	const server = express();
+	const app = express();
 	
-	server.listen(parseInt(settings.webport, 10) || 8090, settings.host);
+	server = app.listen(parseInt(settings.webport, 10) || 8090, settings.host);
 	
 	// for parsing application/x-www-form-urlencoded
-	server.use(express.urlencoded({extended: true})); 
+	app.use(express.urlencoded({extended: true})); 
 	
-	server.post('/GetBasicCommands', (req, res) => {
+	app.post('/GetBasicCommands', (req, res) => {
 		adapter.log.debug(req.path);
 
 		res.set('Content-Type', 'text/xml');
 		res.send(xmlStart + getXmlBasicC() + xmlEnd);
 	});
 	
-	server.post('/GetAllCommands', (req, res) => {
+	app.post('/GetAllCommands', (req, res) => {
 		adapter.log.debug(req.path + ": " + req.body.xml);
 		
 		xml.parseStringPromise(req.body.xml).then(async function(result) {
@@ -298,11 +293,9 @@ async function initWebServer(settings) {
 		res.send(responseXml);
 		
 		adapter.log.debug("Response: " +  responseXml);
-		
-		//changed.clear();
 	});
 	
-	return server;
+	return app;
 }
 
 async function main() {
