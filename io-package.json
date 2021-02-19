@@ -4,16 +4,16 @@
 		"version": "0.0.2",
 		"news": {
 			"0.0.2": {
-				"en": "Konfigurierbarer Host im Adminbereich",
-				"de": "Konfigurierbarer Host im Adminbereich",
-				"ru": "Konfigurierbarer Host im Adminbereich",
-				"pt": "Konfigurierbarer Host im Adminbereich",
-				"nl": "Konfigurierbarer Host im Adminbereich",
-				"fr": "Konfigurierbarer Host im Adminbereich",
-				"it": "Konfigurierbarer Host im Adminbereich",
-				"es": "Konfigurierbarer Host im Adminbereich",
-				"pl": "Konfigurierbarer Host im Adminbereich",
-				"zh-cn": "Konfigurierbarer Host im Adminbereich"
+				"en": "Configurable host in Admin",
+			    "de": "Konfigurierbarer Host in Admin",
+			    "ru": "Настраиваемый хост в админке",
+			    "pt": "Host configurável em Admin",
+			    "nl": "Configureerbare host in Admin",
+			    "fr": "Hôte configurable dans Admin",
+			    "it": "Host configurabile in Admin",
+			    "es": "Host configurable en Admin",
+			    "pl": "Konfigurowalny host w Admin",
+			    "zh-cn": "管理员中可配置的主机"
 			},
 			"0.0.1": {
 				"en": "initial release",
@@ -42,16 +42,16 @@
 			"zh-cn": "锡尔连接"
 		},
 		"desc": {
-			"en": "syrconnect",
-			"de": "syrconnect",
-			"ru": "syrconnect",
-			"pt": "syrconnect",
-			"nl": "syrconnect",
-			"fr": "Syrconnect",
-			"it": "syrconnect",
-			"es": "syrconnect",
-			"pl": "syrconnect",
-			"zh-cn": "syrconnect"
+			"en": "Cloudsimulator for https://syrconnect.de",
+		    "de": "Cloudsimulator für https://syrconnect.de",
+		    "ru": "Cloudsimulator для https://syrconnect.de",
+		    "pt": "Cloudsimulator para https://syrconnect.de",
+		    "nl": "Cloudsimulator voor https://syrconnect.de",
+		    "fr": "Cloudsimulator pour https://syrconnect.de",
+		    "it": "Cloudsimulator per https://syrconnect.de",
+		    "es": "Cloudsimulator para https://syrconnect.de",
+		    "pl": "Cloudsimulator dla https://syrconnect.de",
+		    "zh-cn": "适用于https://syrconnect.de的Cloudsimulator"
 		},
 		"authors": [
 			"eifel-tech <tw73149315m@gmx.net>"
