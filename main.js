@@ -61,7 +61,7 @@ meta.set("getRG3", ["", nbr, "", null, null, null, false]);
 meta.set("getRPD", ["Regenerationsintervall", nbr, "Tage", 1, 365, 1, false]);
 meta.set("getRPW", ["", nbr, "", null, null, null, false]);
 meta.set("getRTH", ["Regenerationsuhrzeit (Stunde)", nbr, "", 0, 23, 2, true]);
-meta.set("getRTI", ["", str, "", null, null, null, false]);
+meta.set("getRTI", ["Regenerationsdauer", str, "", null, null, null, false]);
 meta.set("getRTM", ["Regenerationsuhrzeit (Minute)", nbr, "", 0, 59, 0, true]);
 meta.set("getSCR", ["", nbr, "", null, null, null, false]);
 meta.set("getSRE", ["", nbr, "", null, null, null, false]);
