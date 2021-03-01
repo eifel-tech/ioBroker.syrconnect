@@ -14,6 +14,7 @@ const xml = require('xml2js');
 
 const str = "string";
 const nbr = "number";
+const bool = "boolean";
 const xmlStart = '<?xml version="1.0" encoding="utf-8"?><sc version="1.0"><d>';
 const xmlEnd = '</d></sc>';
 const basicC = ["getSRN", "getVER", "getTYP", "getCNA"];
@@ -28,8 +29,8 @@ meta.set("getCDE", ["", str, "", null, null, null, false]);
 meta.set("getCS1", ["", nbr, "", null, null, null, false]);
 meta.set("getCS2", ["", nbr, "", null, null, null, false]);
 meta.set("getCS3", ["", nbr, "", null, null, null, false]);
-meta.set("getCYN", ["", str, "", null, null, null, false]); 
-meta.set("getCYT", ["", str, "", null, null, null, false]);
+meta.set("getCYN", ["Nummer laufendes Programm", nbr, "", 0, 1000, 0, false]); 
+meta.set("getCYT", ["Dauer laufendes Programm [mm:ss]", str, "", null, null, null, false]);
 meta.set("getDEN", ["", nbr, "", null, null, null, false]);
 meta.set("getDGW", ["Gateway", str, "", null, null, null, false]);
 meta.set("getDWF", ["Durchschnittlicher Tageswasserverbrauch", nbr, "l", 0, 5000, 200, true]);
@@ -55,20 +56,20 @@ meta.set("getPRS", ["Wasserdruck", nbr, "bar", 0, 10, 0, false]);
 meta.set("getPST", ["", nbr, "", null, null, null, false]);
 meta.set("getRDO", ["Regenerationsmitteldosierung", nbr, "g/l", 0, 1000, 0, true]);
 meta.set("getRES", ["Restkapazität", nbr, "l", 0, 1000, 0, false]);
-meta.set("getRG1", ["", nbr, "", null, null, null, false]);
+meta.set("getRG1", ["Regeneration läuft", bool, "", null, null, false, true]);
 meta.set("getRG2", ["", nbr, "", null, null, null, false]);
 meta.set("getRG3", ["", nbr, "", null, null, null, false]);
 meta.set("getRPD", ["Regenerationsintervall", nbr, "Tage", 1, 365, 1, false]);
 meta.set("getRPW", ["", nbr, "", null, null, null, false]);
 meta.set("getRTH", ["Regenerationsuhrzeit (Stunde)", nbr, "", 0, 23, 2, true]);
-meta.set("getRTI", ["Regenerationsdauer", str, "", null, null, null, false]);
+meta.set("getRTI", ["Gesamte Regenerationsdauer [hh:mm]", str, "", null, null, null, false]);
 meta.set("getRTM", ["Regenerationsuhrzeit (Minute)", nbr, "", 0, 59, 0, true]);
 meta.set("getSCR", ["", nbr, "", null, null, null, false]);
 meta.set("getSRE", ["", nbr, "", null, null, null, false]);
 meta.set("getSS1", ["Salzvorrat", nbr, "Wochen", 0, 52, 0, false]);
 meta.set("getSS2", ["", nbr, "", null, null, null, false]);
 meta.set("getSS3", ["", nbr, "", null, null, null, false]);
-meta.set("getSTA", ["", str, "", null, null, null, false]);
+meta.set("getSTA", ["Name laufendes Programm", str, "", null, null, null, false]);
 meta.set("getSV1", ["Salzmenge im Behälter", nbr, "kg", 0, 50, 0, true]);
 meta.set("getSV2", ["", nbr, "", null, null, null, false]);
 meta.set("getSV3", ["", nbr, "", null, null, null, false]);
@@ -140,6 +141,10 @@ function startAdapter(options) {
 					|| id == "getFCO") {
 					val = val * 10;
 				}
+				//DPs vom type boolean
+				if(id == "getRG1") {
+					val = val ? "1" : "0";
+				}
 				changed.set(id, val);
 			}
 		},
@@ -182,21 +187,36 @@ async function createObjectWithState(name, value) {
 	//Number
 	} else if(meta.get(name)[1] == nbr) {
 		obj = {
-		        _id: name,
-		        type: "state",
-		        common: {
-		            name: meta.get(name)[0],
-		            type: meta.get(name)[1],
-		            unit: meta.get(name)[2],
-		            min: meta.get(name)[3],
-		            max: meta.get(name)[4],
-		            def: meta.get(name)[5],
-		            role: "value",
-		            read: true,
-		            write: meta.get(name)[6]
-		        },
-		        native: {}
-		    };
+	        _id: name,
+	        type: "state",
+	        common: {
+	            name: meta.get(name)[0],
+	            type: meta.get(name)[1],
+	            unit: meta.get(name)[2],
+	            min: meta.get(name)[3],
+	            max: meta.get(name)[4],
+	            def: meta.get(name)[5],
+	            role: "value",
+	            read: true,
+	            write: meta.get(name)[6]
+	        },
+	        native: {}
+	    };
+	//Boolean
+	} else if(meta.get(name)[1] == bool) {
+		obj = {
+	        _id: name,
+	        type: "state",
+	        common: {
+	            name: meta.get(name)[0],
+	            type: meta.get(name)[1],
+	            def: meta.get(name)[5],
+	            role: "switch",
+	            read: true,
+	            write: meta.get(name)[6]
+	        },
+	        native: {}
+	    };
 	}
 	
 	try {
@@ -262,6 +282,10 @@ async function initWebServer(settings) {
 				if(id == "getPRS"
 					|| id == "getFCO") {
 					newVal = newVal / 10;
+				}
+				//In boolean konvertieren
+				if(id == "getRG1") {
+					newVal = newVal == "1";
 				}
 				
 				//Objekte erzeugen und Values setzen, wenn es sich um neue Daten handelt
