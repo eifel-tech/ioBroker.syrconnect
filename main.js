@@ -59,7 +59,7 @@ meta.set("getRES", ["Restkapazität", nbr, "l", 0, 1000, 0, false]);
 meta.set("getRG1", ["Regeneration läuft 1", bool, "", null, null, false, false]);
 meta.set("getRG2", ["Regeneration läuft 2", bool, "", null, null, false, false]);
 meta.set("getRG3", ["Regeneration läuft 3", bool, "", null, null, false, false]);
-meta.set("getRPD", ["Regenerationsintervall", nbr, "Tage", 1, 365, 1, false]);
+meta.set("getRPD", ["Regenerationsintervall", nbr, "Tage", 0, 365, 0, true]);
 meta.set("getRPW", ["", nbr, "", null, null, null, false]);
 meta.set("getRTH", ["Regenerationsuhrzeit (Stunde)", nbr, "", 0, 23, 2, true]);
 meta.set("getRTI", ["Gesamte Regenerationsdauer [hh:mm]", str, "", null, null, null, false]);
@@ -73,7 +73,7 @@ meta.set("getSTA", ["Name laufendes Programm", str, "", null, null, null, false]
 meta.set("getSV1", ["Salzmenge im Behälter 1", nbr, "kg", 0, 50, 0, true]);
 meta.set("getSV2", ["Salzmenge im Behälter 2", nbr, "kg", 0, 50, 0, true]);
 meta.set("getSV3", ["Salzmenge im Behälter 3", nbr, "kg", 0, 50, 0, true]);
-meta.set("getTOR", ["", nbr, "", null, null, null, false]);
+meta.set("getTOR", ["Summe Regenerationsvoränge", nbr, "", 0, 1000000, 0, false]);
 meta.set("getVAC", ["", nbr, "", null, null, null, false]);
 meta.set("getVS1", ["", nbr, "", null, null, null, false]);
 meta.set("getVS2", ["", nbr, "", null, null, null, false]);
