@@ -19,66 +19,77 @@ const xmlStart = '<?xml version="1.0" encoding="utf-8"?><sc version="1.0"><d>';
 const xmlEnd = '</d></sc>';
 const basicC = ["getSRN", "getVER", "getTYP", "getCNA"];
 const meta = new Map();
-//key, [Beschreibung, type, unit, min, max, def, writable];
-meta.set("getSRN", ["Seriennummer", nbr, "", null, null, null, false]);
-meta.set("getVER", ["Firmware Version", nbr, "", null, null, null, false]);
-meta.set("getTYP", ["", str, "", null, null, null, false]);
-meta.set("getCNA", ["Gerätename", str, "", null, null, null, false]);
-meta.set("getALM", ["", str, "", null, null, null, false]);
-meta.set("getCDE", ["", str, "", null, null, null, false]);
-meta.set("getCS1", ["Kapazität Austauscherharz 1", nbr, "%", 0, 100, 0, false]);
-meta.set("getCS2", ["Kapazität Austauscherharz 2", nbr, "%", 0, 100, 0, false]);
-meta.set("getCS3", ["Kapazität Austauscherharz 3", nbr, "%", 0, 100, 0, false]);
-meta.set("getCYN", ["Nummer laufendes Programm", nbr, "", 0, 1000, 0, false]); 
-meta.set("getCYT", ["Dauer laufendes Programm [mm:ss]", str, "", null, null, null, false]);
-meta.set("getDEN", ["", nbr, "", null, null, null, false]);
-meta.set("getDGW", ["Gateway", str, "", null, null, null, false]);
-meta.set("getDWF", ["Durchschnittlicher Tageswasserverbrauch", nbr, "l", 0, 5000, 200, true]);
-meta.set("getFCO", ["Eisengehalt", nbr, "ppm", 0, 100, 0, true]);
-meta.set("getFIR", ["", str, "", null, null, null, false]);
-meta.set("getFLO", ["Aktueller Wasserverbrauch", nbr, "l/min", 0, 100, 0, false]);
-meta.set("getHED", ["Urlaub Beginn Tag", nbr, "", 1, 31, 1, true]);
-meta.set("getHEM", ["Urlaub Beginn Monat", nbr, "", 1, 12, 1, true]);
-meta.set("getHEY", ["Uralub Beginn Jahr", nbr, "", 0, 99, 0, true]);
-meta.set("getHSD", ["Urlaub Ende Tag", nbr, "", 1, 31, 1, true]);
-meta.set("getHSM", ["Urlaub Ende Monat", nbr, "", 1, 12, 1, true]);
-meta.set("getHSY", ["Urlaub Ende Jahr", nbr, "", 0, 99, 0, true]);
-meta.set("getIPH", ["", str, "", null, null, null, false]);
-meta.set("getIWH", ["Rohwasserhärte", nbr, "°dH", 1, 100, 21, true]);
-meta.set("getMAC", ["Mac-Adresse", str, "", null, null, null, false]);
-meta.set("getMAN", ["Hersteller", str, "", null, null, null, false]);
-meta.set("getNOT", ["", str, "", null, null, null, false]);
-meta.set("getOWH", ["Weichwasserhärte", nbr, "°dH", 0, 100, 2, true]);
-meta.set("getPA1", ["", nbr, "", null, null, null, false]);
-meta.set("getPA2", ["", nbr, "", null, null, null, false]);
-meta.set("getPA3", ["", nbr, "", null, null, null, false]);
-meta.set("getPRS", ["Wasserdruck", nbr, "bar", 0, 10, 0, false]);
-meta.set("getPST", ["", nbr, "", null, null, null, false]);
-meta.set("getRDO", ["Regenerationsmitteldosierung", nbr, "g/l", 0, 1000, 0, true]);
-meta.set("getRES", ["Restkapazität", nbr, "l", 0, 1000, 0, false]);
-meta.set("getRG1", ["Regeneration läuft 1", bool, "", null, null, false, false]);
-meta.set("getRG2", ["Regeneration läuft 2", bool, "", null, null, false, false]);
-meta.set("getRG3", ["Regeneration läuft 3", bool, "", null, null, false, false]);
-meta.set("getRPD", ["Regenerationsintervall", nbr, "Tage", 0, 365, 0, true]);
-meta.set("getRPW", ["", nbr, "", null, null, null, false]);
-meta.set("getRTH", ["Regenerationsuhrzeit (Stunde)", nbr, "", 0, 23, 2, true]);
-meta.set("getRTI", ["Gesamte Regenerationsdauer [hh:mm]", str, "", null, null, null, false]);
-meta.set("getRTM", ["Regenerationsuhrzeit (Minute)", nbr, "", 0, 59, 0, true]);
-meta.set("getSCR", ["", nbr, "", null, null, null, false]);
-meta.set("getSRE", ["", nbr, "", null, null, null, false]);
-meta.set("getSS1", ["Salzvorrat 1", nbr, "Wochen", 0, 52, 0, false]);
-meta.set("getSS2", ["Salzvorrat 2", nbr, "Wochen", 0, 52, 0, false]);
-meta.set("getSS3", ["Salzvorrat 3", nbr, "Wochen", 0, 52, 0, false]);
-meta.set("getSTA", ["Name laufendes Programm", str, "", null, null, null, false]);
-meta.set("getSV1", ["Salzmenge im Behälter 1", nbr, "kg", 0, 50, 0, true]);
-meta.set("getSV2", ["Salzmenge im Behälter 2", nbr, "kg", 0, 50, 0, true]);
-meta.set("getSV3", ["Salzmenge im Behälter 3", nbr, "kg", 0, 50, 0, true]);
-meta.set("getTOR", ["Summe Regenerationsvoränge", nbr, "", 0, 1000000, 0, false]);
-meta.set("getVAC", ["", nbr, "", null, null, null, false]);
-meta.set("getVS1", ["", nbr, "", null, null, null, false]);
-meta.set("getVS2", ["", nbr, "", null, null, null, false]);
-meta.set("getVS3", ["", nbr, "", null, null, null, false]);
-meta.set("getWHU", ["", nbr, "", null, null, null, false]);
+//key, [Beschreibung, type, unit, min, max, def, writable, functionname or states-object];
+meta.set("getSRN", ["Seriennummer", nbr, "", null, null, null, false, null]);
+meta.set("getVER", ["Firmware Version", nbr, "", null, null, null, false, null]);
+meta.set("getTYP", ["", str, "", null, null, null, false, null]);
+meta.set("getCNA", ["Gerätename", str, "", null, null, null, false, null]);
+meta.set("getALM", ["", str, "", null, null, null, false, null]);
+meta.set("getCDE", ["", str, "", null, null, null, false, null]);
+meta.set("getCS1", ["Kapazität Austauscherharz 1", nbr, "%", 0, 100, 0, false, null]);
+meta.set("getCS2", ["Kapazität Austauscherharz 2", nbr, "%", 0, 100, 0, false, null]);
+meta.set("getCS3", ["Kapazität Austauscherharz 3", nbr, "%", 0, 100, 0, false, null]);
+meta.set("getCYN", ["Nummer laufendes Programm", nbr, "", 0, 1000, 0, false, null]); 
+meta.set("getCYT", ["Dauer laufendes Programm [mm:ss]", str, "", null, null, null, false, null]);
+meta.set("getDEN", ["", nbr, "", null, null, null, false, null]);
+meta.set("getDGW", ["Gateway", str, "", null, null, null, false, null]);
+meta.set("getDWF", ["Durchschnittlicher Tageswasserverbrauch", nbr, "l", 0, 5000, 200, true, null]);
+meta.set("getFCO", ["Eisengehalt", nbr, "ppm", 0, 100, 0, true, null]);
+meta.set("getFIR", ["", str, "", null, null, null, false, null]);
+meta.set("getFLO", ["Aktueller Wasserverbrauch", nbr, "l/min", 0, 100, 0, false, null]);
+meta.set("getHED", ["Urlaub Beginn Tag", nbr, "", 1, 31, 1, true, null]);
+meta.set("getHEM", ["Urlaub Beginn Monat", nbr, "", 1, 12, 1, true, null]);
+meta.set("getHEY", ["Uralub Beginn Jahr", nbr, "", 0, 99, 0, true, null]);
+meta.set("getHSD", ["Urlaub Ende Tag", nbr, "", 1, 31, 1, true, null]);
+meta.set("getHSM", ["Urlaub Ende Monat", nbr, "", 1, 12, 1, true, null]);
+meta.set("getHSY", ["Urlaub Ende Jahr", nbr, "", 0, 99, 0, true, null]);
+meta.set("getIPH", ["", str, "", null, null, null, false, null]);
+meta.set("getIWH", ["Rohwasserhärte", nbr, "°dH", 1, 100, 21, true, null]);
+meta.set("getMAC", ["Mac-Adresse", str, "", null, null, null, false, null]);
+meta.set("getMAN", ["Hersteller", str, "", null, null, null, false, null]);
+meta.set("getNOT", ["", str, "", null, null, null, false, null]);
+meta.set("getOWH", ["Weichwasserhärte", nbr, "°dH", 0, 100, 2, true, null]);
+meta.set("getPA1", ["", nbr, "", null, null, null, false, null]);
+meta.set("getPA2", ["", nbr, "", null, null, null, false, null]);
+meta.set("getPA3", ["", nbr, "", null, null, null, false, null]);
+meta.set("getPRS", ["Wasserdruck", nbr, "bar", 0, 10, 0, false, null]);
+meta.set("getPST", ["", nbr, "", null, null, null, false, null]);
+meta.set("getRDO", ["Regenerationsmitteldosierung", nbr, "g/l", 0, 1000, 0, true, null]);
+meta.set("getRES", ["Restkapazität", nbr, "l", 0, 1000, 0, false, null]);
+meta.set("getRG1", ["Regeneration läuft 1", bool, "", null, null, false, false, null]);
+meta.set("getRG2", ["Regeneration läuft 2", bool, "", null, null, false, false, null]);
+meta.set("getRG3", ["Regeneration läuft 3", bool, "", null, null, false, false, null]);
+meta.set("getRPD", ["Regeneration alle x Tage", nbr, "Tage", 0, 365, 0, true, null]);
+meta.set("getRPW", ["Regeneration jeden xten Tag der Woche", nbr, "", 0, 127, 0, true, "createRPWStates()"]);
+meta.set("getRTH", ["Regenerationsuhrzeit (Stunde)", nbr, "", 0, 23, 2, true, null]);
+meta.set("getRTI", ["Gesamte Regenerationsdauer [hh:mm]", str, "", null, null, null, false, null]);
+meta.set("getRTM", ["Regenerationsuhrzeit (Minute)", nbr, "", 0, 59, 0, true, null]);
+meta.set("getSCR", ["", nbr, "", null, null, null, false, null]);
+meta.set("getSRE", ["", nbr, "", null, null, null, false, null]);
+meta.set("getSS1", ["Salzvorrat 1", nbr, "Wochen", 0, 52, 0, false, null]);
+meta.set("getSS2", ["Salzvorrat 2", nbr, "Wochen", 0, 52, 0, false, null]);
+meta.set("getSS3", ["Salzvorrat 3", nbr, "Wochen", 0, 52, 0, false, null]);
+meta.set("getSTA", ["Name laufendes Programm", str, "", null, null, null, false, null]);
+meta.set("getSV1", ["Salzmenge im Behälter 1", nbr, "kg", 0, 50, 0, true, null]);
+meta.set("getSV2", ["Salzmenge im Behälter 2", nbr, "kg", 0, 50, 0, true, null]);
+meta.set("getSV3", ["Salzmenge im Behälter 3", nbr, "kg", 0, 50, 0, true, null]);
+meta.set("getTOR", ["Summe Regenerationsvoränge", nbr, "", 0, 1000000, 0, false, null]);
+meta.set("getVAC", ["", nbr, "", null, null, null, false, null]);
+meta.set("getVS1", ["", nbr, "", null, null, null, false, null]);
+meta.set("getVS2", ["", nbr, "", null, null, null, false, null]);
+meta.set("getVS3", ["", nbr, "", null, null, null, false, null]);
+meta.set("getWHU", ["", nbr, "", null, null, null, false, null]);
+
+const rpwFixStates = {
+	"0000000": "NN",
+    "0000001": "Mo",
+    "0000010": "Di",
+    "0000100": "Mi",
+    "0001000": "Do",
+    "0010000": "Fr",
+    "0100000": "Sa",
+    "1000000": "So"
+};
 
 var changed = new Map();
 var server;
@@ -88,6 +99,78 @@ var server;
  * @type {ioBroker.Adapter}
  */
 let adapter;
+
+function getPermutations(list, maxLen) {
+    // Copy initial values as arrays
+    var perm = list.map(function(val) {
+        return [val];
+    });
+    // Our permutation generator
+    var generate = function(perm, maxLen, currLen) {
+        // Reached desired length
+        if (currLen === maxLen) {
+            return perm;
+        }
+        // For each existing permutation
+        for (var i = 0, len = perm.length; i < len; i++) {
+            var currPerm = perm.shift();
+            // Create new permutation
+            for (var k = 0; k < list.length; k++) {
+                perm.push(currPerm.concat(list[k]));
+            }
+        }
+        // Recurse
+        return generate(perm, maxLen, currLen + 1);
+    };
+    // Start with size 1 because of initial values
+    return generate(perm, maxLen, 1);
+};
+
+function getBinary(arr) {
+    let bin = "";
+    for(let i = 0; i < arr.length; i++) {
+        bin += arr[i];
+    }
+
+    return bin;
+}
+/**
+ * Wird aus createObjectWithState aufgerufen, weil die Funktion in meta für getRPW eingetragen ist. 
+ * Die möglichen Werte werden wie folgt ermittelt:
+ * - Basis sind alle 7stelligen Permutationen von 0 und 1. Daraus ergeben sich also Binärzahlen der Form 0000001
+ * - Jede 1 steht je nach Position in der Binärzahl für einen Wochentag
+ * - Mehrere Einsen bedeuten dann eine Kombination aus mehreren Tagen
+ * - 0000010 = 2 = Dienstag
+ * - 0000011 = 3 = Montag und Dienstag
+ * - 0000100 = 4 = Mittworch 
+ * @returns
+ */
+function createRPWStates() {
+	let ret = {};
+	let res = getPermutations([0, 1], 7);
+	for(let i = 0; i < res.length; i++) {
+	    let bin = getBinary(res[i]);
+	    //Unbekannte States hinzugügen
+	    if(!rpwFixStates.hasOwnProperty(bin) && (bin.match(/1/g) || []).length > 1) {
+	    	let tmpArr = [];
+	        let tmp = new Array(res[i].length).fill(0);
+	        //Ermittelt die Position der Einsen, um damit die fixen Tage zu ermitteln
+	        for(let l = 0; l < res[i].length; l++) {
+	            if(res[i][l] == 1) {
+	                tmp[l] = 1;
+	                tmpArr.unshift(rpwFixStates[getBinary(tmp)]);
+	                tmp.fill(0);
+	            }
+	        }
+
+	        rpwFixStates[bin] = tmpArr.join(";");
+	    }
+	    //Dezimalzahlen sind die neuen Keys
+	    ret[parseInt(bin, 2)] = rpwFixStates[bin];
+	}
+	
+	return ret;
+}
 
 /**
  * Starts the adapter instance
@@ -202,6 +285,15 @@ async function createObjectWithState(name, value) {
 	        },
 	        native: {}
 	    };
+		
+		if(meta.get(name)[7]) {
+			if(meta.get(name)[7] instanceof Object) {
+				obj.common.states = meta.get(name)[7];
+			} else {
+				obj.common.states = eval(meta.get(name)[7]);
+			}
+		}
+		
 	//Boolean
 	} else if(meta.get(name)[1] == bool) {
 		obj = {
