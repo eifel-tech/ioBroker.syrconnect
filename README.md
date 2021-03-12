@@ -10,7 +10,7 @@
 
 [![NPM](https://nodei.co/npm/iobroker.syrconnect.png?downloads=true)](https://nodei.co/npm/iobroker.syrconnect/)
 
-**Tests:** ![Test and Release](https://travis-ci.com/eifel-tech/ioBroker.syrconnect.svg?branch=master)
+**Tests:** [![Test and Release](https://travis-ci.com/eifel-tech/ioBroker.syrconnect.svg?branch=master)](https://travis-ci.com/github/eifel-tech/ioBroker.syrconnect)
 
 ## syrconnect adapter for ioBroker
 
