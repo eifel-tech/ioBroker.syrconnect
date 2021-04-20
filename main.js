@@ -12,73 +12,16 @@ const adapterName = require('./package.json').name.split('.').pop();
 const express = require('express');
 const xml = require('xml2js');
 
-const str = "string";
-const nbr = "number";
-const bool = "boolean";
+//Geräte
+var lex10 = require('./devices/lex10');
+
 const xmlStart = '<?xml version="1.0" encoding="utf-8"?><sc version="1.0"><d>';
 const xmlEnd = '</d></sc>';
 const basicC = ["getSRN", "getVER", "getTYP", "getCNA"];
-const meta = new Map();
-//key, [Beschreibung, type, unit, min, max, def, writable, functionname or states-object];
-meta.set("getSRN", ["Seriennummer", nbr, "", null, null, null, false, null]);
-meta.set("getVER", ["Firmware Version", nbr, "", null, null, null, false, null]);
-meta.set("getTYP", ["", str, "", null, null, null, false, null]);
-meta.set("getCNA", ["Gerätename", str, "", null, null, null, false, null]);
-meta.set("getALM", ["", str, "", null, null, null, false, null]);
-meta.set("getCDE", ["", str, "", null, null, null, false, null]);
-meta.set("getCS1", ["Kapazität Austauscherharz 1", nbr, "%", 0, 100, 0, false, null]);
-meta.set("getCS2", ["Kapazität Austauscherharz 2", nbr, "%", 0, 100, 0, false, null]);
-meta.set("getCS3", ["Kapazität Austauscherharz 3", nbr, "%", 0, 100, 0, false, null]);
-meta.set("getCYN", ["Nummer laufendes Programm", nbr, "", 0, 1000, 0, false, null]); 
-meta.set("getCYT", ["Dauer laufendes Programm [mm:ss]", str, "", null, null, null, false, null]);
-meta.set("getDEN", ["", nbr, "", null, null, null, false, null]);
-meta.set("getDGW", ["Gateway", str, "", null, null, null, false, null]);
-meta.set("getDWF", ["Durchschnittlicher Tageswasserverbrauch", nbr, "l", 0, 5000, 200, true, null]);
-meta.set("getFCO", ["Eisengehalt", nbr, "ppm", 0, 100, 0, true, null]);
-meta.set("getFIR", ["", str, "", null, null, null, false, null]);
-meta.set("getFLO", ["Aktueller Wasserverbrauch", nbr, "l/min", 0, 100, 0, false, null]);
-meta.set("getHED", ["Urlaub Beginn Tag", nbr, "", 1, 31, 1, true, null]);
-meta.set("getHEM", ["Urlaub Beginn Monat", nbr, "", 1, 12, 1, true, null]);
-meta.set("getHEY", ["Uralub Beginn Jahr", nbr, "", 0, 99, 0, true, null]);
-meta.set("getHSD", ["Urlaub Ende Tag", nbr, "", 1, 31, 1, true, null]);
-meta.set("getHSM", ["Urlaub Ende Monat", nbr, "", 1, 12, 1, true, null]);
-meta.set("getHSY", ["Urlaub Ende Jahr", nbr, "", 0, 99, 0, true, null]);
-meta.set("getIPH", ["", str, "", null, null, null, false, null]);
-meta.set("getIWH", ["Rohwasserhärte", nbr, "°dH", 1, 100, 21, true, null]);
-meta.set("getMAC", ["Mac-Adresse", str, "", null, null, null, false, null]);
-meta.set("getMAN", ["Hersteller", str, "", null, null, null, false, null]);
-meta.set("getNOT", ["", str, "", null, null, null, false, null]);
-meta.set("getOWH", ["Weichwasserhärte", nbr, "°dH", 0, 100, 2, true, null]);
-meta.set("getPA1", ["", nbr, "", null, null, null, false, null]);
-meta.set("getPA2", ["", nbr, "", null, null, null, false, null]);
-meta.set("getPA3", ["", nbr, "", null, null, null, false, null]);
-meta.set("getPRS", ["Wasserdruck", nbr, "bar", 0, 10, 0, false, null]);
-meta.set("getPST", ["", nbr, "", null, null, null, false, null]);
-meta.set("getRDO", ["Regenerationsmitteldosierung", nbr, "g/l", 0, 1000, 0, true, null]);
-meta.set("getRES", ["Restkapazität", nbr, "l", 0, 1000, 0, false, null]);
-meta.set("getRG1", ["Regeneration läuft 1", bool, "", null, null, false, false, null]);
-meta.set("getRG2", ["Regeneration läuft 2", bool, "", null, null, false, false, null]);
-meta.set("getRG3", ["Regeneration läuft 3", bool, "", null, null, false, false, null]);
-meta.set("getRPD", ["Regeneration alle x Tage", nbr, "Tage", 0, 365, 0, true, null]);
-meta.set("getRPW", ["Regeneration jeden xten Tag der Woche", nbr, "", 0, 127, 0, true, "createRPWStates()"]);
-meta.set("getRTH", ["Regenerationsuhrzeit (Stunde)", nbr, "", 0, 23, 2, true, null]);
-meta.set("getRTI", ["Gesamte Regenerationsdauer [hh:mm]", str, "", null, null, null, false, null]);
-meta.set("getRTM", ["Regenerationsuhrzeit (Minute)", nbr, "", 0, 59, 0, true, null]);
-meta.set("getSCR", ["", nbr, "", null, null, null, false, null]);
-meta.set("getSRE", ["", nbr, "", null, null, null, false, null]);
-meta.set("getSS1", ["Salzvorrat 1", nbr, "Wochen", 0, 52, 0, false, null]);
-meta.set("getSS2", ["Salzvorrat 2", nbr, "Wochen", 0, 52, 0, false, null]);
-meta.set("getSS3", ["Salzvorrat 3", nbr, "Wochen", 0, 52, 0, false, null]);
-meta.set("getSTA", ["Name laufendes Programm", str, "", null, null, null, false, null]);
-meta.set("getSV1", ["Salzmenge im Behälter 1", nbr, "kg", 0, 50, 0, true, null]);
-meta.set("getSV2", ["Salzmenge im Behälter 2", nbr, "kg", 0, 50, 0, true, null]);
-meta.set("getSV3", ["Salzmenge im Behälter 3", nbr, "kg", 0, 50, 0, true, null]);
-meta.set("getTOR", ["Summe Regenerationsvoränge", nbr, "", 0, 1000000, 0, false, null]);
-meta.set("getVAC", ["", nbr, "", null, null, null, false, null]);
-meta.set("getVS1", ["", nbr, "", null, null, null, false, null]);
-meta.set("getVS2", ["", nbr, "", null, null, null, false, null]);
-meta.set("getVS3", ["", nbr, "", null, null, null, false, null]);
-meta.set("getWHU", ["", nbr, "", null, null, null, false, null]);
+
+var devices = {
+	"lex10": lex10
+};
 
 const rpwFixStates = {
 	"0000000": "NN",
@@ -91,7 +34,6 @@ const rpwFixStates = {
     "1000000": "So"
 };
 
-var changed = new Map();
 var server;
 
 /**
@@ -219,16 +161,12 @@ function startAdapter(options) {
 				adapter.log.debug("state " + id + " changed: " + val + " (ack = " + state.ack + ")");
 				
 				//Änderungen für Response merken
-				id = id.substr(id.lastIndexOf(".") + 1);
-				if(id == "getPRS"
-					|| id == "getFCO") {
-					val = val * 10;
-				}
-				//DPs vom type boolean
-				if(id == "getRG1") {
-					val = val ? "1" : "0";
-				}
-				changed.set(id, val);
+				let arr = id.split(".");
+				id = arr[arr.length - 1];
+				
+				let device = devices[arr[arr.length - 2]];
+				val = device.convertFromGUI(id, val);
+				device.changed.set(id, val);
 			}
 		},
 
@@ -251,61 +189,62 @@ function startAdapter(options) {
 	}));
 }
 
-async function createObjectWithState(name, value) {
+async function createObjectWithState(dev, name, value) {
 	let obj;
+	let dp = devices[dev][name];
 	//String
-	if(meta.get(name)[1] == str) {
+	if(dp.type == str) {
 		obj = {
-	        _id: name,
+	        _id: dev + "." + name,
 	        type: "state",
 	        common: {
-	            name: meta.get(name)[0],
-	            type: meta.get(name)[1],
+	            name: dp.label,
+	            type: dp.type,
 	            role: "value",
 	            read: true,
-	            write: meta.get(name)[6]
+	            write: dp.writable
 	        },
 	        native: {}
 	    };
 	//Number
-	} else if(meta.get(name)[1] == nbr) {
+	} else if(dp.type == nbr) {
 		obj = {
-	        _id: name,
+	        _id: dev + "." + name,
 	        type: "state",
 	        common: {
-	            name: meta.get(name)[0],
-	            type: meta.get(name)[1],
-	            unit: meta.get(name)[2],
-	            min: meta.get(name)[3],
-	            max: meta.get(name)[4],
-	            def: meta.get(name)[5],
+	            name: dp.label,
+	            type: dp.type,
+	            unit: dp.unit,
+	            min: dp.min,
+	            max: dp.max,
+	            def: dp.def,
 	            role: "value",
 	            read: true,
-	            write: meta.get(name)[6]
+	            write: dp.writable
 	        },
 	        native: {}
 	    };
 		
-		if(meta.get(name)[7]) {
-			if(meta.get(name)[7] instanceof Object) {
-				obj.common.states = meta.get(name)[7];
+		if(dp.states) {
+			if(dp.states instanceof Object) {
+				obj.common.states = dp.states;
 			} else {
-				obj.common.states = eval(meta.get(name)[7]);
+				obj.common.states = eval(dp.states);
 			}
 		}
 		
 	//Boolean
-	} else if(meta.get(name)[1] == bool) {
+	} else if(dp.type == bool) {
 		obj = {
-	        _id: name,
+	        _id: dev + "." + name,
 	        type: "state",
 	        common: {
-	            name: meta.get(name)[0],
-	            type: meta.get(name)[1],
-	            def: meta.get(name)[5],
+	            name: dp.label,
+	            type: dp.type,
+	            def: dp.def,
 	            role: "switch",
 	            read: true,
-	            write: meta.get(name)[6]
+	            write: dp.writable
 	        },
 	        native: {}
 	    };
@@ -330,18 +269,23 @@ function getXmlBasicC() {
 	return ret;
 }
 
-function getXmlAllC() {
+function getXmlAllC(deviceName) {
 	let ret = "";
 	
-	for(let key of meta.keys()) {
-		//Wenn der Datenpunkt geändert wurde, muss im Response-XML eine Zeile mit dem set statt get und dem
-		//neuen Value hinzugefügt werden.
-		if(changed.has(key)) {
-			ret += '<c n="' + key.replace(/get/g, "set") + '" v="' + changed.get(key) + '"/>';
-			changed.delete(key);
+	if(deviceName) {
+		let device = devices[deviceName];
+		for(let key in device) {
+			if(key.startsWith("get")){
+				//Wenn der Datenpunkt geändert wurde, muss im Response-XML eine Zeile mit dem set statt get und dem
+				//neuen Value hinzugefügt werden.
+				if(device.changed.has(key)) {
+					ret += '<c n="' + key.replace(/get/g, "set") + '" v="' + device.changed.get(key) + '"/>';
+					device.changed.delete(key);
+				}
+				
+				ret += '<c n="' + key + '" v=""/>';
+			}
 		}
-		
-		ret += '<c n="' + key + '" v=""/>';
 	}
 	
 	return ret;
@@ -357,7 +301,7 @@ async function initWebServer(settings) {
 	
 	app.post('/GetBasicCommands', (req, res) => {
 		adapter.log.debug(req.path);
-
+		
 		res.set('Content-Type', 'text/xml');
 		res.send(xmlStart + getXmlBasicC() + xmlEnd);
 	});
@@ -367,52 +311,60 @@ async function initWebServer(settings) {
 		
 		xml.parseStringPromise(req.body.xml).then(async function(result) {
 			let json = result.sc.d[0].c;
-			for(let i = 0; i < json.length; i++) {
-				let id = json[i].$.n;
-				//Eisengehalt und Wasserdruck werden als 10fache Menge übermittelt, müssen aber als float gespeichert werden
-				let newVal = json[i].$.v;
-				if(id == "getPRS"
-					|| id == "getFCO") {
-					newVal = newVal / 10;
-				}
-				//In boolean konvertieren
-				if(id == "getRG1") {
-					newVal = newVal == "1";
-				}
-				
-				//Objekte erzeugen und Values setzen, wenn es sich um neue Daten handelt
-				let knownObj = await adapter.getObjectAsync(id);
-				if(!knownObj) {
-					await createObjectWithState(id, newVal);
-				} else {
-					//Bei bekannten Objekten, den Status bei Bedarf aktualisieren
-					let state = await adapter.getStateAsync(id);
-					if(state) {
-						let oldVal = state.val;
-						if((state.ack && oldVal != newVal)
-								|| (!state.ack && oldVal == newVal)) {
-							adapter.setStateAsync(id, newVal, true);
+			
+			let deviceName = await getDeviceName(json);
+			if(deviceName) {
+				for(let i = 0; i < json.length; i++) {
+					let id = json[i].$.n;
+					
+					let newVal = devices[deviceName].convertToGUI(id, json[i].$.v);
+					
+					//Objekte erzeugen und Values setzen, wenn es sich um neue Daten handelt
+					let knownObj = await adapter.getObjectAsync(deviceName + "." + id);
+					if(!knownObj) {
+						await createObjectWithState(deviceName, id, newVal);
+					} else {
+						//Bei bekannten Objekten, den Status bei Bedarf aktualisieren
+						let state = await adapter.getStateAsync(deviceName + "." + id);
+						if(state) {
+							let oldVal = state.val;
+							if((state.ack && oldVal != newVal)
+									|| (!state.ack && oldVal == newVal)) {
+								adapter.setStateAsync(deviceName + "." + id, newVal, true);
+							}
 						}
 					}
 				}
+				
+				//Event für Statusänderungen für alle Objekte des Adapters registrieren
+				adapter.subscribeStates('*');
 			}
 			
-			//Event für Statusänderungen für alle Objekte des Adapters registrieren
-			adapter.subscribeStates('*');
+			//Response senden
+			res.set('Content-Type', 'text/xml');
+			let responseXml = xmlStart + getXmlAllC(deviceName) + xmlEnd;
+			res.send(responseXml);
+			
+			adapter.log.debug("Response: " +  responseXml);
 		})
 		.catch(function(err) {
 			adapter.log.error(err);
 		});
-		
-		res.set('Content-Type', 'text/xml');
-		let responseXml = xmlStart + getXmlAllC() + xmlEnd;
-		res.send(responseXml);
-		
-		adapter.log.debug("Response: " +  responseXml);
 	});
 	
 	return app;
 }
+
+async function getDeviceName(json) {
+	for(let i = 0; i < json.length; i++) {
+		let id = json[i].$.n;
+		if(id == "getCNA") {
+			return json[i].$.v.toLowerCase();
+		}
+	}
+	
+	return null;
+} 
 
 async function main() {
 	initWebServer(adapter.config).then(() => {

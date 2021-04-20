@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "syrconnect",
-		"version": "0.0.2",
+		"version": "0.0.3",
 		"news": {
+			"0.0.3": {
+				 "en": "Preparations for further devices",
+				 "de": "Vorbereitungen für weitere Geräte",
+				 "ru": "Подготовка к дальнейшим устройствам",
+				 "pt": "Preparativos para outros dispositivos",
+				 "nl": "Voorbereidingen voor verdere apparaten",
+				 "fr": "Préparations pour d'autres appareils",
+				 "it": "Preparativi per ulteriori dispositivi",
+				 "es": "Preparativos para otros dispositivos",
+				 "pl": "Przygotowania do kolejnych urządzeń",
+				 "zh-cn": "准备进一步的设备"
+			},
 			"0.0.2": {
 				"en": "Configurable host in Admin",
 			    "de": "Konfigurierbarer Host in Admin",
@@ -77,23 +89,6 @@
 		"dataSource": "push",
 		"materialize": true,
 		"materializeTab": true,
-		"adminTab": {
-			"singleton": true,
-			"name": {
-				"en": "Syr Connect",
-				"de": "Syr Connect",
-				"ru": "Syr Connect",
-				"pt": "Syr Connect",
-				"nl": "Syr Connect",
-				"fr": "Syr Connect",
-				"it": "Syr Connect",
-				"es": "Syr Connect",
-				"pl": "Syr Connect",
-				"zh-cn": "锡尔连接"
-			},
-			"link": "",
-			"fa-icon": "info"
-		},
 		"supportCustoms": true,
 		"dependencies": [
 			{
