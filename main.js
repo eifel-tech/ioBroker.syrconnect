@@ -193,7 +193,7 @@ async function createObjectWithState(dev, name, value) {
 	let obj;
 	let dp = devices[dev][name];
 	//String
-	if(dp.type == str) {
+	if(dp.type == "string") {
 		obj = {
 	        _id: dev + "." + name,
 	        type: "state",
@@ -207,7 +207,7 @@ async function createObjectWithState(dev, name, value) {
 	        native: {}
 	    };
 	//Number
-	} else if(dp.type == nbr) {
+	} else if(dp.type == "number") {
 		obj = {
 	        _id: dev + "." + name,
 	        type: "state",
@@ -234,7 +234,7 @@ async function createObjectWithState(dev, name, value) {
 		}
 		
 	//Boolean
-	} else if(dp.type == bool) {
+	} else if(dp.type == "boolean") {
 		obj = {
 	        _id: dev + "." + name,
 	        type: "state",
