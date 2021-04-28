@@ -13,11 +13,9 @@ const express = require('express');
 const xml = require('xml2js');
 
 //Geräte
-var lex10 = require('./js/lex10.js');
+var Lex10 = require('./js/Lex10.js');
 
-var devices = {
-	"lex10": lex10
-};
+var devicesMap = new Map();
 
 const xmlStart = '<?xml version="1.0" encoding="utf-8"?><sc version="1.0"><d>';
 const xmlEnd = '</d></sc>';
@@ -157,14 +155,13 @@ function startAdapter(options) {
 			// The state was changed by GUI
 			if(state && !state.ack) {
 				let val = state.val;
-				
 				adapter.log.debug("state " + id + " changed: " + val + " (ack = " + state.ack + ")");
 				
 				//Änderungen für Response merken
 				let arr = id.split(".");
 				id = arr[arr.length - 1];
 				
-				let device = devices[arr[arr.length - 2]];
+				let device = devicesMap.get(arr[arr.length - 2]);
 				val = device.convertFromGUI(id, val);
 				device.changed.set(id, val);
 			}
@@ -191,11 +188,12 @@ function startAdapter(options) {
 
 async function createObjectWithState(dev, name, value) {
 	let obj;
-	let dp = devices[dev][name];
+	let dp = dev[name];
+	let id = dev.name + "." + dev.id + "." + name;
 	//String
 	if(dp.type == "string") {
 		obj = {
-	        _id: dev + "." + name,
+	        _id: id,
 	        type: "state",
 	        common: {
 	            name: dp.label,
@@ -209,7 +207,7 @@ async function createObjectWithState(dev, name, value) {
 	//Number
 	} else if(dp.type == "number") {
 		obj = {
-	        _id: dev + "." + name,
+	        _id: id,
 	        type: "state",
 	        common: {
 	            name: dp.label,
@@ -236,7 +234,7 @@ async function createObjectWithState(dev, name, value) {
 	//Boolean
 	} else if(dp.type == "boolean") {
 		obj = {
-	        _id: dev + "." + name,
+	        _id: id,
 	        type: "state",
 	        common: {
 	            name: dp.label,
@@ -269,11 +267,10 @@ function getXmlBasicC() {
 	return ret;
 }
 
-function getXmlAllC(deviceName) {
+function getXmlAllC(device) {
 	let ret = "";
 	
-	if(deviceName) {
-		let device = devices[deviceName];
+	if(device) {
 		for(let key in device) {
 			if(key.startsWith("get")){
 				//Wenn der Datenpunkt geändert wurde, muss im Response-XML eine Zeile mit dem set statt get und dem
@@ -312,25 +309,25 @@ async function initWebServer(settings) {
 		xml.parseStringPromise(req.body.xml).then(async function(result) {
 			let json = result.sc.d[0].c;
 			
-			let deviceName = await getDeviceName(json);
-			if(deviceName) {
+			let device = await getDevice(json);
+			if(device) {
 				for(let i = 0; i < json.length; i++) {
 					let id = json[i].$.n;
 					
-					let newVal = devices[deviceName].convertToGUI(id, json[i].$.v);
+					let newVal = device.convertToGUI(id, json[i].$.v);
 					
 					//Objekte erzeugen und Values setzen, wenn es sich um neue Daten handelt
-					let knownObj = await adapter.getObjectAsync(deviceName + "." + id);
+					let knownObj = await adapter.getObjectAsync(device.name + "." + device.id + "." + id);
 					if(!knownObj) {
-						await createObjectWithState(deviceName, id, newVal);
+						await createObjectWithState(device, id, newVal);
 					} else {
 						//Bei bekannten Objekten, den Status bei Bedarf aktualisieren
-						let state = await adapter.getStateAsync(deviceName + "." + id);
+						let state = await adapter.getStateAsync(device.name + "." + device.id + "." + id);
 						if(state) {
 							let oldVal = state.val;
 							if((state.ack && oldVal != newVal)
 									|| (!state.ack && oldVal == newVal)) {
-								adapter.setStateAsync(deviceName + "." + id, newVal, true);
+								adapter.setStateAsync(device.name + "." + device.id + "." + id, newVal, true);
 							}
 						}
 					}
@@ -342,7 +339,7 @@ async function initWebServer(settings) {
 			
 			//Response senden
 			res.set('Content-Type', 'text/xml');
-			let responseXml = xmlStart + getXmlAllC(deviceName) + xmlEnd;
+			let responseXml = xmlStart + getXmlAllC(device) + xmlEnd;
 			res.send(responseXml);
 			
 			adapter.log.debug("Response: " +  responseXml);
@@ -355,15 +352,28 @@ async function initWebServer(settings) {
 	return app;
 }
 
-async function getDeviceName(json) {
+async function getDevice(json) {
+	let name, ser = "";
 	for(let i = 0; i < json.length; i++) {
 		let id = json[i].$.n;
 		if(id == "getCNA") {
-			return json[i].$.v.toLowerCase();
+			name = json[i].$.v.toLowerCase();
+		}
+		if(id == "getSRN") {
+			ser = json[i].$.v.toLowerCase();
+		}
+		if(name && ser) {
+			//Device erzeugen und speichern
+			if(!devicesMap.has(ser)) {
+				if(name.toLowerCase() == "lex10") {
+					devicesMap.set(ser, new Lex10(ser, name));
+				}
+			}
+			break;
 		}
 	}
 	
-	return null;
+	return devicesMap.get(ser);
 } 
 
 async function main() {

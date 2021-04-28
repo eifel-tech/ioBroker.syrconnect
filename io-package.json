@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "syrconnect",
-		"version": "0.0.3",
+		"version": "0.0.4",
 		"news": {
+			"0.0.4": {
+				"en": "Supporting several devices of the same type",
+			    "de": "Unterstützung mehrerer Geräte desselben Typs",
+			    "ru": "Поддержка нескольких устройств одного типа",
+			    "pt": "Suportando vários dispositivos do mesmo tipo",
+			    "nl": "Ondersteuning voor meerdere apparaten van hetzelfde type",
+			    "fr": "Prise en charge de plusieurs appareils du même type",
+			    "it": "Supporta diversi dispositivi dello stesso tipo",
+			    "es": "Soporta varios dispositivos del mismo tipo",
+			    "pl": "Obsługa kilku urządzeń tego samego typu",
+			    "zh-cn": "支持多个相同类型的设备"
+			},
 			"0.0.3": {
 				 "en": "Preparations for further devices",
 				 "de": "Vorbereitungen für weitere Geräte",

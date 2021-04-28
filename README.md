@@ -40,6 +40,9 @@ Da iobroker aber nicht als <code>root</code> ausgeführt wird, ist dies z.Zt. ni
 ### 0.0.3
 * (eifel-tech) Vorbereitungen für weitere Geräte
 
+### 0.0.4
+* (eifel-tech) Unterstützung mehrerer gleichartiger Geräte
+
 ## License
 MIT License
 
