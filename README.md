@@ -43,6 +43,9 @@ Da iobroker aber nicht als <code>root</code> ausgeführt wird, ist dies z.Zt. ni
 ### 0.0.4
 * (eifel-tech) Unterstützung mehrerer gleichartiger Geräte
 
+### 0.0.5
+* (eifel-tech) Name des Regenerationsprogramms lesbar gemacht
+
 ## License
 MIT License
 

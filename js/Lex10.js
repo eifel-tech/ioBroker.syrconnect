@@ -79,6 +79,15 @@ var Lex10 = function(id, name) {
 			return val == "1";
 		}
 		
+		//Name Regenerationsprogramm lesbar machen
+		if(id == "getSTA") {
+			val = val.replace(/Neubef.{1}llung/g, "Neubefüllung");
+			val = val.replace(/R.{1}ck/g, "Rück");
+			val = val.replace(/p.{1}l+ung/g, "pühlung");
+			val = val.replace("langsame", "langsame Spühlung");
+			return val;
+		}
+		
 		return val;
 	};
 	

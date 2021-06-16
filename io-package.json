@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "syrconnect",
-		"version": "0.0.4",
+		"version": "0.0.5",
 		"news": {
+			"0.0.5": {
+			    "en": "Regeneration program name readable",
+			    "de": "Name des Regenerationsprogramms lesbar",
+			    "ru": "Читаемое название программы регенерации",
+			    "pt": "Nome do programa de regeneração legível",
+			    "nl": "Naam van het regeneratieprogramma leesbaar",
+			    "fr": "Nom du programme de régénération lisible",
+			    "it": "Nome del programma di rigenerazione leggibile",
+			    "es": "Nombre del programa de regeneración legible",
+			    "pl": "Czytelna nazwa programu regeneracji",
+			    "zh-cn": "再生程序名称可读"
+			},
 			"0.0.4": {
 				"en": "Supporting several devices of the same type",
 			    "de": "Unterstützung mehrerer Geräte desselben Typs",
