@@ -113,7 +113,7 @@
 		"dataSource": "push",
 		"materialize": true,
 		"materializeTab": true,
-		"supportCustoms": true,
+		"supportCustoms": false,
 		"dependencies": [
 			{
 				"js-controller": ">=2.0.0"
