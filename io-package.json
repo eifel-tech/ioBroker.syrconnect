@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "syrconnect",
-		"version": "0.0.5",
+		"version": "0.1.0",
 		"news": {
+			"0.1.0": {
+			    "en": "Changes for js-controller 3.3",
+			    "de": "Änderungen für js-Controller 3.3",
+			    "ru": "Изменения для js-controller 3.3",
+			    "pt": "Mudanças para js-controller 3.3",
+			    "nl": "Wijzigingen voor js-controller 3.3",
+			    "fr": "Changements pour js-controller 3.3",
+			    "it": "Modifiche per js-controller 3.3",
+			    "es": "Cambios para js-controller 3.3",
+			    "pl": "Zmiany dla kontrolera js 3.3",
+			    "zh-cn": "js-controller 3.3 的变化"
+			},
 			"0.0.5": {
 			    "en": "Regeneration program name readable",
 			    "de": "Name des Regenerationsprogramms lesbar",

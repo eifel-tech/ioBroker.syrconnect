@@ -46,6 +46,9 @@ Da iobroker aber nicht als <code>root</code> ausgeführt wird, ist dies z.Zt. ni
 ### 0.0.5
 * (eifel-tech) Name des Regenerationsprogramms lesbar gemacht
 
+### 0.1.0
+* (eifel-tech) Änderungen für js-controller 3.3
+
 ## License
 MIT License
 

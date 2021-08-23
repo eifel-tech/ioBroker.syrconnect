@@ -9,8 +9,8 @@ const bool = "boolean";
 var Lex10 = function(id, name) {
 	this.id = id;
 	this.name = name;
-	this.getSRN = new Datapoint("Seriennummer", nbr, "", null, null, null, false, null);
-	this.getVER = new Datapoint("Firmware Version", nbr, "", null, null, null, false, null);
+	this.getSRN = new Datapoint("Seriennummer", str, "", null, null, null, false, null);
+	this.getVER = new Datapoint("Firmware Version", str, "", null, null, null, false, null);
 	this.getTYP = new Datapoint("", str, "", null, null, null, false, null);
 	this.getCNA = new Datapoint("Gerätename", str, "", null, null, null, false, null);
 	this.getALM = new Datapoint("Alarm", str, "", null, null, null, false, null);
@@ -20,7 +20,7 @@ var Lex10 = function(id, name) {
 	this.getCS3 = new Datapoint("Kapazität Austauscherharz 3", nbr, "%", 0, 100, 0, false, null);
 	this.getCYN = new Datapoint("Nummer laufendes Programm", nbr, "", 0, 1000, 0, false, null); 
 	this.getCYT = new Datapoint("Dauer laufendes Programm [mm:ss]", str, "", null, null, null, false, null);
-	this.getDEN = new Datapoint("", nbr, "", null, null, null, false, null);
+	this.getDEN = new Datapoint("", str, "", null, null, null, false, null);
 	this.getDGW = new Datapoint("Gateway", str, "", null, null, null, false, null);
 	this.getDWF = new Datapoint("Durchschnittlicher Tageswasserverbrauch", nbr, "l", 0, 5000, 200, true, null);
 	this.getFCO = new Datapoint("Eisengehalt", nbr, "ppm", 0, 100, 0, true, null);
@@ -42,7 +42,7 @@ var Lex10 = function(id, name) {
 	this.getPA2 = new Datapoint("", nbr, "", null, null, null, false, null);
 	this.getPA3 = new Datapoint("", nbr, "", null, null, null, false, null);
 	this.getPRS = new Datapoint("Wasserdruck", nbr, "bar", 0, 10, 0, false, null);
-	this.getPST = new Datapoint("", nbr, "", null, null, null, false, null);
+	this.getPST = new Datapoint("", str, "", null, null, null, false, null);
 	this.getRDO = new Datapoint("Regenerationsmitteldosierung", nbr, "g/l", 0, 1000, 0, true, null);
 	this.getRES = new Datapoint("Restkapazität", nbr, "l", 0, 1000, 0, false, null);
 	this.getRG1 = new Datapoint("Regeneration läuft 1", bool, "", null, null, false, false, null);
@@ -54,7 +54,7 @@ var Lex10 = function(id, name) {
 	this.getRTI = new Datapoint("Gesamte Regenerationsdauer [hh:mm]", str, "", null, null, null, false, null);
 	this.getRTM = new Datapoint("Regenerationsuhrzeit (Minute)", nbr, "", 0, 59, 0, true, null);
 	this.getSCR = new Datapoint("", nbr, "", null, null, null, false, null);
-	this.getSRE = new Datapoint("", nbr, "", null, null, null, false, null);
+	this.getSRE = new Datapoint("", str, "", null, null, null, false, null);
 	this.getSS1 = new Datapoint("Salzvorrat 1", nbr, "Wochen", 0, 52, 0, false, null);
 	this.getSS2 = new Datapoint("Salzvorrat 2", nbr, "Wochen", 0, 52, 0, false, null);
 	this.getSS3 = new Datapoint("Salzvorrat 3", nbr, "Wochen", 0, 52, 0, false, null);
@@ -70,12 +70,27 @@ var Lex10 = function(id, name) {
 	this.getWHU = new Datapoint("", nbr, "", null, null, null, false, null);
 	
 	this.convertToGUI = function(id, val) {
+		//Umwandlung von String in Number. Bei IDs SRN, VER, DEN, PST, SRE darf aber keine Umwandlung
+		//erfolgen, denn der Typ des DP ist String.
+		if(id !==  "getSRN"
+				&& id !== "getVER"
+				&& id !== "getDEN"
+				&& id !== "getPST"
+				&& id !== "getSRE"
+				&& val !== '' 
+				&& typeof val !== "boolean") {
+			let valTmp = Number(val);
+			if(!Number.isNaN(valTmp)) {
+				val = valTmp;
+			}
+		} 
+	
 		//Eisengehalt und Wasserdruck werden als 10fache Menge übermittelt, müssen aber als float gespeichert werden
 		if(id == "getPRS"  || id == "getFCO") {
 			return val / 10;
 		}
 		//In boolean konvertieren
-		if(id == "getRG1") {
+		if(id == "getRG1" || id == "getRG2" || id == "getRG3") {
 			return val == "1";
 		}
 		
@@ -96,7 +111,7 @@ var Lex10 = function(id, name) {
 			return val * 10;
 		}
 		//DPs vom type boolean
-		if(id == "getRG1") {
+		if(id == "getRG1" || id == "getRG2" || id == "getRG3") {
 			return val ? "1" : "0";
 		}
 		
