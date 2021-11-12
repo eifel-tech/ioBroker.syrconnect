@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "syrconnect",
-		"version": "0.1.0",
+		"version": "0.1.1",
 		"news": {
+			"0.1.1": {
+			    "en": "Listening on further url paths",
+			    "de": "Auf weitere URL-Pfade lauschen",
+			    "ru": "Прослушивание дальнейших URL-адресов",
+			    "pt": "Ouvindo em outros caminhos de url",
+			    "nl": "Luisteren op verdere URL-paden",
+			    "fr": "Écoute sur d'autres chemins d'URL",
+			    "it": "Ascolto su ulteriori percorsi URL",
+			    "es": "Escuchar en otras rutas de URL",
+			    "pl": "Słuchanie na dalszych ścieżkach url",
+			    "zh-cn": "监听进一步的 url 路径"
+			},
 			"0.1.0": {
 			    "en": "Changes for js-controller 3.3",
 			    "de": "Änderungen für js-Controller 3.3",

@@ -22,12 +22,14 @@ entsprechende Datenpunkte. Damit die Geräte den neuen Server finden sind folgen
 eigener DNS-Server installiert werden, der eine IP aus dem lokalen Netzwerk zurückliefert. Z.B. <code>Dnsmasq</code> tut hier, was nötig ist.
 2. Die lokale IP muss auf einen lokalen Webserver verweisen, der auf <code>Port 80</code> auf <code>/WebServices/SyrConnectLimexWebService.asmx/GetBasicCommands</code>
 und <code>/WebServices/SyrConnectLimexWebService.asmx/GetAllCommands</code> lauscht. Alle Anfragen müssen dann an den Adapter unter 
-<code>iobroker-IP:8090/GetBasicCommands</code> bzw. <code>iobroker-IP:8090/GetAllCommands</code> weitergeleitet werden.
+<code>iobroker-IP:8090/GetBasicCommands</code> bzw. <code>iobroker-IP:8090/GetAllCommands</code> weitergeleitet werden. Alternativ können die Anfragen auch an <code>iobroker-IP:8090/WebServices/SyrConnectLimexWebService.asmx/GetBasicCommands</code> bzw. <code>iobroker-IP:8090/WebServices/SyrConnectLimexWebService.asmx/GetAllCommands</code> weitergeleitet werden.
+3. Der Adapter funktioniert definitiv bis Firmware-Version 2.8. Bei neuerer Firmware könnten sich diverse Dinge verändert haben, bei denen keine URL-Weiterleitung mehr möglich ist.
 
 ## TODOs
 * Leider ist sowohl ein eigener DNS-Server, der auf <code>Port 53</code> lauscht, als auch ein Webserver für <code>Port 80</code> 
 bisher nicht möglich, in den Adapter zu implementieren, weil der Adapter dann mit Root-Rechten gestartet werden müsste.
 Da iobroker aber nicht als <code>root</code> ausgeführt wird, ist dies z.Zt. nicht möglich.
+* Sollte mit neuerer Firmware eine API zum Abfragen der Werte eingebaut werden, sollte der Adapter umgebaut werden, sodass die Werte direkt von der API stammen. Dann würden eigener DNS- und Webserver entfallen.
 
 ## Changelog
 
@@ -48,6 +50,9 @@ Da iobroker aber nicht als <code>root</code> ausgeführt wird, ist dies z.Zt. ni
 
 ### 0.1.0
 * (eifel-tech) Änderungen für js-controller 3.3
+
+### 0.1.1
+* (eifel-tech) Adapter kann auch über <code>iobroker-IP:8090/WebServices/SyrConnectLimexWebService.asmx/GetBasicCommands</code> bzw. <code>iobroker-IP:8090/WebServices/SyrConnectLimexWebService.asmx/GetAllCommands</code> aufgerufen werden
 
 ## License
 MIT License

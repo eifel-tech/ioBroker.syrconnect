@@ -23,13 +23,13 @@ const basicC = ["getSRN", "getVER", "getTYP", "getCNA"];
 
 const rpwFixStates = {
 	"0000000": "NN",
-    "0000001": "Mo",
-    "0000010": "Di",
-    "0000100": "Mi",
-    "0001000": "Do",
-    "0010000": "Fr",
-    "0100000": "Sa",
-    "1000000": "So"
+	"0000001": "Mo",
+	"0000010": "Di",
+	"0000100": "Mi",
+	"0001000": "Do",
+	"0010000": "Fr",
+	"0100000": "Sa",
+	"1000000": "So"
 };
 
 var server;
@@ -296,60 +296,74 @@ async function initWebServer(settings) {
 	// for parsing application/x-www-form-urlencoded
 	app.use(express.urlencoded({extended: true})); 
 	
+	app.post('/WebServices/SyrConnectLimexWebService.asmx/GetBasicCommands', (req, res) => {
+		basicCommands(req, res);
+	});
 	app.post('/GetBasicCommands', (req, res) => {
-		adapter.log.debug(req.path);
-		
-		res.set('Content-Type', 'text/xml');
-		res.send(xmlStart + getXmlBasicC() + xmlEnd);
+		basicCommands(req, res);
 	});
 	
+	app.post('/WebServices/SyrConnectLimexWebService.asmx/GetAllCommands', (req, res) => {
+		allCommands(req, res);
+	});
 	app.post('/GetAllCommands', (req, res) => {
-		adapter.log.debug(req.path + ": " + req.body.xml);
-		
-		xml.parseStringPromise(req.body.xml).then(async function(result) {
-			let json = result.sc.d[0].c;
-			
-			let device = await getDevice(json);
-			if(device) {
-				for(let i = 0; i < json.length; i++) {
-					let id = json[i].$.n;
-					
-					let newVal = device.convertToGUI(id, json[i].$.v);
-					
-					//Objekte erzeugen und Values setzen, wenn es sich um neue Daten handelt
-					let knownObj = await adapter.getObjectAsync(device.name + "." + device.id + "." + id);
-					if(!knownObj) {
-						await createObjectWithState(device, id, newVal);
-					} else {
-						//Bei bekannten Objekten, den Status bei Bedarf aktualisieren
-						let state = await adapter.getStateAsync(device.name + "." + device.id + "." + id);
-						if(state) {
-							let oldVal = state.val;
-							if((state.ack && oldVal != newVal)
-									|| (!state.ack && oldVal == newVal)) {
-								adapter.setStateAsync(device.name + "." + device.id + "." + id, newVal, true);
-							}
-						}
-					}
-				}
-				
-				//Event für Statusänderungen für alle Objekte des Adapters registrieren
-				adapter.subscribeStates('*');
-			}
-			
-			//Response senden
-			res.set('Content-Type', 'text/xml');
-			let responseXml = xmlStart + getXmlAllC(device) + xmlEnd;
-			res.send(responseXml);
-			
-			adapter.log.debug("Response: " +  responseXml);
-		})
-		.catch(function(err) {
-			adapter.log.error(err);
-		});
+		allCommands(req, res);
 	});
 	
 	return app;
+}
+
+function basicCommands(req, res) {
+	adapter.log.debug(req.path);
+	
+	res.set('Content-Type', 'text/xml');
+	res.send(xmlStart + getXmlBasicC() + xmlEnd);
+}
+
+function allCommands(req, res) {
+	adapter.log.debug(req.path + ": " + req.body.xml);
+	
+	xml.parseStringPromise(req.body.xml).then(async function(result) {
+		let json = result.sc.d[0].c;
+		
+		let device = await getDevice(json);
+		if(device) {
+			for(let i = 0; i < json.length; i++) {
+				let id = json[i].$.n;
+				
+				let newVal = device.convertToGUI(id, json[i].$.v);
+				
+				//Objekte erzeugen und Values setzen, wenn es sich um neue Daten handelt
+				let knownObj = await adapter.getObjectAsync(device.name + "." + device.id + "." + id);
+				if(!knownObj) {
+					await createObjectWithState(device, id, newVal);
+				} else {
+					//Bei bekannten Objekten, den Status bei Bedarf aktualisieren
+					let state = await adapter.getStateAsync(device.name + "." + device.id + "." + id);
+					if(state) {
+						let oldVal = state.val;
+						if((state.ack && oldVal != newVal)
+								|| (!state.ack && oldVal == newVal)) {
+							adapter.setStateAsync(device.name + "." + device.id + "." + id, newVal, true);
+						}
+					}
+				}
+			}
+			
+			//Event für Statusänderungen für alle Objekte des Adapters registrieren
+			adapter.subscribeStates('*');
+		}
+		
+		//Response senden
+		res.set('Content-Type', 'text/xml');
+		let responseXml = xmlStart + getXmlAllC(device) + xmlEnd;
+		res.send(responseXml);
+		
+		adapter.log.debug("Response: " +  responseXml);
+	})
+	.catch(function(err) {
+		adapter.log.error(err);
+	});
 }
 
 async function getDevice(json) {
