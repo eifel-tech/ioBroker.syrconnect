@@ -2,3 +2,4 @@
 /node_modules/
 /.project
 /.dev-server/
+/.tern-project
