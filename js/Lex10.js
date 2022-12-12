@@ -95,7 +95,7 @@ var Lex10 = function(id, name) {
 		}
 		
 		//Name Regenerationsprogramm lesbar machen
-		if(id == "getSTA") {
+		if(id == "getSTA" && typeof val === 'string') {
 			val = val.replace(/Neubef.{1}llung/g, "Neubefüllung");
 			val = val.replace(/R.{1}ck/g, "Rück");
 			val = val.replace(/p.{1}l+ung/g, "pülung");
