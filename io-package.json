@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "syrconnect",
-		"version": "0.1.1",
+		"version": "0.1.2",
 		"news": {
+			"0.1.2": {
+				"en": "Update dependencies",
+  				"de": "Abhängigkeiten aktualisieren",
+  				"ru": "Обновить зависимости",
+				"pt": "Dependências de atualização",
+				"nl": "Update afhankelijkheid",
+				"fr": "Mettre à jour les dépendances",
+				"it": "Dipendenze di aggiornamento",
+				"es": "Actualizar las dependencias",
+				"pl": "Zależności aktualnej",
+				"uk": "Оновлення залежності",
+				"zh-cn": "最新依赖"
+			},
 			"0.1.1": {
 			    "en": "Listening on further url paths",
 			    "de": "Auf weitere URL-Pfade lauschen",
