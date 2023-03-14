@@ -54,10 +54,13 @@ Da iobroker aber nicht als <code>root</code> ausgeführt wird, ist dies z.Zt. ni
 ### 0.1.1
 * (eifel-tech) Adapter kann auch über <code>iobroker-IP:8090/WebServices/SyrConnectLimexWebService.asmx/GetBasicCommands</code> bzw. <code>iobroker-IP:8090/WebServices/SyrConnectLimexWebService.asmx/GetAllCommands</code> aufgerufen werden
 
+### 0.1.2
+* (eifel-tech) Update der Abhängigkeiten
+
 ## License
 MIT License
 
-Copyright (c) 2021 eifel-tech <tw73149315m@gmx.net>
+Copyright (c) 2021 eifel-tech <hikaso@gmx.net>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
