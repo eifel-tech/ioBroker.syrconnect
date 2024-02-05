@@ -8,12 +8,14 @@ updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: daily
+      interval: monthly
+      time: "04:00"
       timezone: Europe/Berlin
     versioning-strategy: increase
 
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: daily
+      interval: monthly
+      time: "04:00"
       timezone: Europe/Berlin
