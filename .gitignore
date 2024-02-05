@@ -1,5 +1,6 @@
+.*/
 /iob_npm.done
 /node_modules/
 /.project
-/.dev-server/
+
 /.tern-project

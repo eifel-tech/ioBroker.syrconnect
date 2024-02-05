@@ -57,6 +57,9 @@ Da iobroker aber nicht als <code>root</code> ausgeführt wird, ist dies z.Zt. ni
 ### 0.1.2
 * (eifel-tech) Update der Abhängigkeiten
 
+### 1.0.0
+* (eifel-tech) Vorbereitet für Node 18 und JS-Controler > 3
+
 ## License
 MIT License
 

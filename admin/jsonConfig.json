@@ -1,0 +1,20 @@
+{
+	"i18n": true,
+	"type": "panel",
+	"items": {
+		"host": {
+			"sm": 12,
+			"md": 6,
+			"lg": 6,
+			"type": "text",
+			"label": "Host"
+		},
+		"webport": {
+			"sm": 12,
+			"md": 6,
+			"lg": 6,
+			"type": "text",
+			"label": "Port"
+		}
+	}
+}
