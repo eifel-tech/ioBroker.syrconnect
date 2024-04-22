@@ -17,7 +17,7 @@
   "deprecated": false,
   "description": "syrconnect",
   "devDependencies": {
-    "@iobroker/testing": "^4.1.1",
+    "@iobroker/testing": "^4.1.3",
     "@types/chai": "^4.3.11",
     "@types/chai-as-promised": "^7.1.8",
     "@types/gulp": "^4.0.17",
