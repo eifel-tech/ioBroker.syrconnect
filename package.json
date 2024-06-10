@@ -11,7 +11,7 @@
     "node": ">= 18"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.1.4",
+    "@iobroker/adapter-core": "^3.1.6",
     "xml2js": "^0.6.2"
   },
   "deprecated": false,
