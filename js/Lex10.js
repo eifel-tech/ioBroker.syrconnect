@@ -1,12 +1,12 @@
 "use strict";
 
-var Datapoint = require('./Datapoint.js');
+const Datapoint = require("./Datapoint.js");
 
 const str = "string";
 const nbr = "number";
 const bool = "boolean";
 
-var Lex10 = function(id, name) {
+const Lex10 = function(id, name) {
 	this.id = id;
 	this.name = name;
 	this.getSRN = new Datapoint("Seriennummer", str, "", null, null, null, false, null);
@@ -18,7 +18,7 @@ var Lex10 = function(id, name) {
 	this.getCS1 = new Datapoint("Kapazität Austauscherharz 1", nbr, "%", 0, 110, 0, false, null);
 	this.getCS2 = new Datapoint("Kapazität Austauscherharz 2", nbr, "%", 0, 110, 0, false, null);
 	this.getCS3 = new Datapoint("Kapazität Austauscherharz 3", nbr, "%", 0, 110, 0, false, null);
-	this.getCYN = new Datapoint("Nummer laufendes Programm", nbr, "", 0, 1000, 0, false, null); 
+	this.getCYN = new Datapoint("Nummer laufendes Programm", nbr, "", 0, 1000, 0, false, null);
 	this.getCYT = new Datapoint("Dauer laufendes Programm [mm:ss]", str, "", null, null, null, false, null);
 	this.getDEN = new Datapoint("", str, "", null, null, null, false, null);
 	this.getDGW = new Datapoint("Gateway", str, "", null, null, null, false, null);
@@ -68,7 +68,7 @@ var Lex10 = function(id, name) {
 	this.getVS2 = new Datapoint("", nbr, "", 0, 0, 0, false, null);
 	this.getVS3 = new Datapoint("", nbr, "", 0, 0, 0, false, null);
 	this.getWHU = new Datapoint("", nbr, "", 0, 0, 0, false, null);
-	
+
 	this.convertToGUI = function(id, val) {
 		//Umwandlung von String in Number. Bei IDs SRN, VER, DEN, PST, SRE darf aber keine Umwandlung
 		//erfolgen, denn der Typ des DP ist String.
@@ -77,14 +77,14 @@ var Lex10 = function(id, name) {
 				&& id !== "getDEN"
 				&& id !== "getPST"
 				&& id !== "getSRE"
-				&& val !== '' 
+				&& val !== ""
 				&& typeof val !== "boolean") {
-			let valTmp = Number(val);
+			const valTmp = Number(val);
 			if(!Number.isNaN(valTmp)) {
 				val = valTmp;
 			}
-		} 
-	
+		}
+
 		//Eisengehalt und Wasserdruck werden als 10fache Menge übermittelt, müssen aber als float gespeichert werden
 		if(id == "getPRS"  || id == "getFCO") {
 			return val / 10;
@@ -93,19 +93,19 @@ var Lex10 = function(id, name) {
 		if(id == "getRG1" || id == "getRG2" || id == "getRG3") {
 			return val == "1";
 		}
-		
+
 		//Name Regenerationsprogramm lesbar machen
-		if(id == "getSTA" && typeof val === 'string') {
+		if(id == "getSTA" && typeof val === "string") {
 			val = val.replace(/Neubef.{1}llung/g, "Neubefüllung");
 			val = val.replace(/R.{1}ck/g, "Rück");
 			val = val.replace(/p.{1}l+ung/g, "pülung");
 			val = val.replace("langsame", "langsame Spülung");
 			return val;
 		}
-		
+
 		return val;
 	};
-	
+
 	this.convertFromGUI = function(id, val) {
 		if(id == "getPRS" || id == "getFCO") {
 			return val * 10;
@@ -114,11 +114,11 @@ var Lex10 = function(id, name) {
 		if(id == "getRG1" || id == "getRG2" || id == "getRG3") {
 			return val ? "1" : "0";
 		}
-		
+
 		return val;
 	};
-	
+
 	this.changed = new Map();
-}
+};
 
 module.exports = Lex10;

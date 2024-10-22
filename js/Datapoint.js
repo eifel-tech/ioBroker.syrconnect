@@ -1,6 +1,6 @@
 "use strict";
 
-var Datapoint = function(label, type, unit, min, max, def, writable, states) {
+const Datapoint = function(label, type, unit, min, max, def, writable, states) {
 	this.label = label;
 	this.type = type;
 	this.unit = unit;
