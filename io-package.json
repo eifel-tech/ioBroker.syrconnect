@@ -1,20 +1,20 @@
 {
 	"common": {
 		"name": "syrconnect",
-		"version": "1.0.0",
+		"version": "1.0.1",
 		"news": {
-			"1.0.0": {
-				"en": "Ready for js-controller 3 and node 18",
-				"de": "Bereit für js-controller 3 und node 18",
-				"ru": "и узел 18",
-				"pt": "pronto para js-controller 3 e nó 18",
-				"nl": "klaar voor js-controller 3 en knooppunt 18",
-				"fr": "prêt pour js-controller 3 et noeud 18",
-				"it": "pronto per js-controller 3 e nodo 18",
-				"es": "listo para js-controller 3 y nodo 18",
-				"pl": "gotowy do sterownika js- 3 i węzła 18",
-				"uk": "Готовий для js-controller 3 і node 18",
-				"zh-cn": "准备用于js控制器 3和节点 18"
+			"1.0.1": {
+				"en": "Actual adapter structure",
+				"de": "Aktuelle Adapterstruktur",
+				"ru": "Фактическая структура адаптера",
+				"pt": "Estrutura de adaptador real",
+				"nl": "Werkelijke adapterstructuur",
+				"fr": "Structure réelle de l'adaptateur",
+				"it": "Struttura adattatore effettivo",
+				"es": "Estructura del adaptador real",
+				"pl": "Rzeczywista struktura adaptera",
+				"uk": "Структура адаптера",
+				"zh-cn": "实际适配器结构"
 			}
 		},
 		"titleLang": {

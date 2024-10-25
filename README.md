@@ -39,8 +39,7 @@ entsprechende Datenpunkte. Damit die Geräte den neuen Server finden sind folgen
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 1.0.1 (2024-10-25)
 
 -   (eifel-tech) Umbau auf aktuelle Adapterstruktur
 
