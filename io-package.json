@@ -80,5 +80,31 @@
 		"webport": "8090"
 	},
 	"objects": [],
-	"instanceObjects": []
+	"instanceObjects": [
+		{
+			"_id": "info.connection",
+			"type": "state",
+			"common": {
+				"role": "indicator.connected",
+				"name": {
+					"en": "Server is running",
+					"de": "Server läuft",
+					"ru": "Сервер работает",
+					"pt": "O servidor está em execução",
+					"nl": "Server draait",
+					"fr": "Le serveur fonctionne",
+					"it": "Server in esecuzione",
+					"es": "El servidor está funcionando",
+					"pl": "Serwer działa",
+					"uk": "Сервер працює",
+					"zh-cn": "服务器正在运行"
+				},
+				"type": "boolean",
+				"read": true,
+				"write": false,
+				"def": false
+			},
+			"native": {}
+		}
+	]
 }

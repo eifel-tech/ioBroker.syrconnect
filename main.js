@@ -4,9 +4,9 @@
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
 
-// @ts-ignore
 const express = require("express");
-// @ts-ignore
+const { WebServer } = require("@iobroker/webserver");
+
 const xml = require("xml2js");
 
 //Geräte
@@ -42,23 +42,15 @@ class Syrconnect extends utils.Adapter {
 			1000000: "So",
 		};
 
-		this.server;
+		this.server = null;
 	}
 
 	/**
 	 * Is called when databases are connected and adapter received configuration.
 	 */
 	async onReady() {
-		this.initWebServer(this.config)
-			.then(() => {
-				this.log.info("Webserver started listening on " + this.config.host + ":" + this.config.webport);
-			})
-			.catch((err) => {
-				this.log.error("Failed to initWebServer: " + err);
-				this.terminate
-					? this.terminate(utils.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-					: process.exit(utils.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
-			});
+		this.setState("info.connection", false, true);
+		this.initWebServer(this.config);
 	}
 
 	getPermutations(list, maxLen) {
@@ -242,9 +234,8 @@ class Syrconnect extends utils.Adapter {
 	}
 
 	async initWebServer(settings) {
+		this.server = null;
 		const app = express();
-
-		this.server = app.listen(parseInt(settings.webport, 10) || 8090, settings.host);
 
 		// for parsing application/x-www-form-urlencoded
 		app.use(express.urlencoded({ extended: true }));
@@ -263,7 +254,33 @@ class Syrconnect extends utils.Adapter {
 			this.allCommands(req, res);
 		});
 
-		return app;
+		const webServer = new WebServer({ app: app, adapter: this, secure: false });
+		const server = await webServer.init();
+
+		server.listen(parseInt(settings.webport, 10) || 8090, settings.host, () => {
+			this.log.info("Webserver started listening on " + settings.host + ":" + settings.webport);
+			this.server = server;
+			this.setState("info.connection", true, true);
+		});
+
+		server.on("error", (e) => {
+			if (e.toString().includes("EACCES") && settings.webport <= 1024) {
+				this.log.error(
+					`node.js process has no rights to start server on the port ${settings.webport}.\n` +
+						`Do you know that on linux you need special permissions for ports under 1024?\n`,
+				);
+			} else if (e.toString().includes("EADDRINUSE")) {
+				this.log.error(
+					`Cannot start server on ${settings.host}:${settings.webport}: Port is in use. Please configure another in instance settings`,
+				);
+			} else {
+				this.log.error(`Cannot start server on ${settings.host}:${settings.webport}: ${e}`);
+			}
+
+			this.terminate
+				? this.terminate(utils.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
+				: process.exit(utils.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+		});
 	}
 
 	basicCommands(req, res) {
@@ -351,6 +368,7 @@ class Syrconnect extends utils.Adapter {
 	 */
 	onUnload(callback) {
 		try {
+			// @ts-ignore
 			this.server.close();
 
 			callback();
