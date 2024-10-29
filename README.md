@@ -39,6 +39,13 @@ entsprechende Datenpunkte. Damit die Geräte den neuen Server finden sind folgen
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+-   (eifel-tech) Abhängigkeit zum [iobroker Webserver](https://github.com/ioBroker/webserver) hinzugefügt
+-   (eifel-tech) Fehlerhandling verbessert
+-   (eifel-tech) Gerät hinzufügen: LEXplus10SL
+
 ### 1.0.1 (2024-10-25)
 
 -   (eifel-tech) Umbau auf aktuelle Adapterstruktur

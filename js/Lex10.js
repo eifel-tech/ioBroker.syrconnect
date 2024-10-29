@@ -6,12 +6,12 @@ const str = "string";
 const nbr = "number";
 const bool = "boolean";
 
-const Lex10 = function(id, name) {
+const Lex10 = function (id, name) {
 	this.id = id;
 	this.name = name;
 	this.getSRN = new Datapoint("Seriennummer", str, "", null, null, null, false, null);
 	this.getVER = new Datapoint("Firmware Version", str, "", null, null, null, false, null);
-	this.getTYP = new Datapoint("", str, "", null, null, null, false, null);
+	this.getTYP = new Datapoint("Gerätetyp", str, "", null, null, null, false, null);
 	this.getCNA = new Datapoint("Gerätename", str, "", null, null, null, false, null);
 	this.getALM = new Datapoint("Alarm", str, "", null, null, null, false, null);
 	this.getCDE = new Datapoint("", str, "", null, null, null, false, null);
@@ -24,11 +24,11 @@ const Lex10 = function(id, name) {
 	this.getDGW = new Datapoint("Gateway", str, "", null, null, null, false, null);
 	this.getDWF = new Datapoint("Durchschnittlicher Tageswasserverbrauch", nbr, "l", 0, 5000, 200, true, null);
 	this.getFCO = new Datapoint("Eisengehalt", nbr, "ppm", 0, 110, 0, true, null);
-	this.getFIR = new Datapoint("", str, "", null, null, null, false, null);
+	this.getFIR = new Datapoint("Firmwarename", str, "", null, null, null, false, null);
 	this.getFLO = new Datapoint("Aktueller Durchfluss", nbr, "l/min", 0, 110, 0, false, null);
 	this.getHED = new Datapoint("Urlaub Beginn Tag", nbr, "", 1, 31, 1, true, null);
 	this.getHEM = new Datapoint("Urlaub Beginn Monat", nbr, "", 1, 12, 1, true, null);
-	this.getHEY = new Datapoint("Uralub Beginn Jahr", nbr, "", 0, 99, 0, true, null);
+	this.getHEY = new Datapoint("Urlaub Beginn Jahr", nbr, "", 0, 99, 0, true, null);
 	this.getHSD = new Datapoint("Urlaub Ende Tag", nbr, "", 1, 31, 1, true, null);
 	this.getHSM = new Datapoint("Urlaub Ende Monat", nbr, "", 1, 12, 1, true, null);
 	this.getHSY = new Datapoint("Urlaub Ende Jahr", nbr, "", 0, 99, 0, true, null);
@@ -42,7 +42,10 @@ const Lex10 = function(id, name) {
 	this.getPA2 = new Datapoint("", nbr, "", 0, 0, 0, false, null);
 	this.getPA3 = new Datapoint("", nbr, "", 0, 0, 0, false, null);
 	this.getPRS = new Datapoint("Wasserdruck", nbr, "bar", 0, 10, 0, false, null);
-	this.getPST = new Datapoint("", str, "", null, null, null, false, null);
+	this.getPST = new Datapoint("Drucksensor installiert", nbr, "", 1, 2, 1, false, {
+		1: "not available",
+		2: "available",
+	});
 	this.getRDO = new Datapoint("Regenerationsmitteldosierung", nbr, "g/l", 0, 1000, 0, true, null);
 	this.getRES = new Datapoint("Restkapazität", nbr, "l", 0, 10000, 0, false, null);
 	this.getRG1 = new Datapoint("Regeneration läuft 1", bool, "", null, null, false, false, null);
@@ -67,35 +70,37 @@ const Lex10 = function(id, name) {
 	this.getVS1 = new Datapoint("", nbr, "", 0, 0, 0, false, null);
 	this.getVS2 = new Datapoint("", nbr, "", 0, 0, 0, false, null);
 	this.getVS3 = new Datapoint("", nbr, "", 0, 0, 0, false, null);
-	this.getWHU = new Datapoint("", nbr, "", 0, 0, 0, false, null);
+	this.getWHU = new Datapoint("Einheit Wasserhärte", nbr, "", 0, 1, 0, true, { 0: "°dH", 1: "°fH" });
 
-	this.convertToGUI = function(id, val) {
+	this.convertToGUI = function (id, val) {
 		//Umwandlung von String in Number. Bei IDs SRN, VER, DEN, PST, SRE darf aber keine Umwandlung
 		//erfolgen, denn der Typ des DP ist String.
-		if(id !==  "getSRN"
-				&& id !== "getVER"
-				&& id !== "getDEN"
-				&& id !== "getPST"
-				&& id !== "getSRE"
-				&& val !== ""
-				&& typeof val !== "boolean") {
+		if (
+			id !== "getSRN" &&
+			id !== "getVER" &&
+			id !== "getDEN" &&
+			id !== "getPST" &&
+			id !== "getSRE" &&
+			val !== "" &&
+			typeof val !== "boolean"
+		) {
 			const valTmp = Number(val);
-			if(!Number.isNaN(valTmp)) {
+			if (!Number.isNaN(valTmp)) {
 				val = valTmp;
 			}
 		}
 
 		//Eisengehalt und Wasserdruck werden als 10fache Menge übermittelt, müssen aber als float gespeichert werden
-		if(id == "getPRS"  || id == "getFCO") {
+		if (id == "getPRS" || id == "getFCO") {
 			return val / 10;
 		}
 		//In boolean konvertieren
-		if(id == "getRG1" || id == "getRG2" || id == "getRG3") {
+		if (id == "getRG1" || id == "getRG2" || id == "getRG3") {
 			return val == "1";
 		}
 
 		//Name Regenerationsprogramm lesbar machen
-		if(id == "getSTA" && typeof val === "string") {
+		if (id == "getSTA" && typeof val === "string") {
 			val = val.replace(/Neubef.{1}llung/g, "Neubefüllung");
 			val = val.replace(/R.{1}ck/g, "Rück");
 			val = val.replace(/p.{1}l+ung/g, "pülung");
@@ -106,12 +111,12 @@ const Lex10 = function(id, name) {
 		return val;
 	};
 
-	this.convertFromGUI = function(id, val) {
-		if(id == "getPRS" || id == "getFCO") {
+	this.convertFromGUI = function (id, val) {
+		if (id == "getPRS" || id == "getFCO") {
 			return val * 10;
 		}
 		//DPs vom type boolean
-		if(id == "getRG1" || id == "getRG2" || id == "getRG3") {
+		if (id == "getRG1" || id == "getRG2" || id == "getRG3") {
 			return val ? "1" : "0";
 		}
 

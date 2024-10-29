@@ -11,6 +11,7 @@ const xml = require("xml2js");
 
 //Geräte
 const Lex10 = require("./js/Lex10.js");
+const LexPlus10SL = require("./js/LexPlus10SL.js");
 
 class Syrconnect extends utils.Adapter {
 	/**
@@ -168,7 +169,7 @@ class Syrconnect extends utils.Adapter {
 				if (dp.states instanceof Object) {
 					obj.common.states = dp.states;
 				} else {
-					obj.common.states = eval(dp.states);
+					obj.common.states = eval("this." + dp.states);
 				}
 			}
 
@@ -264,6 +265,7 @@ class Syrconnect extends utils.Adapter {
 		});
 
 		server.on("error", (e) => {
+			//https://stackoverflow.com/questions/9164915/node-js-eacces-error-when-listening-on-most-ports
 			if (e.toString().includes("EACCES") && settings.webport <= 1024) {
 				this.log.error(
 					`node.js process has no rights to start server on the port ${settings.webport}.\n` +
@@ -353,6 +355,8 @@ class Syrconnect extends utils.Adapter {
 				if (!this.devicesMap.has(ser)) {
 					if (name.toLowerCase() == "lex10") {
 						this.devicesMap.set(ser, new Lex10(ser, name));
+					} else if (name.toLowerCase() == "lex10plus10sl") {
+						this.devicesMap.set(ser, new LexPlus10SL(ser, name));
 					}
 				}
 				break;
