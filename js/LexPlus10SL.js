@@ -26,6 +26,7 @@ const LexPlus10SL = function (id, name) {
 	this.getCNO = new Datapoint("", str, "", null, null, null, false, null);
 	this.getFIR = new Datapoint("Firmwarename", str, "", null, null, null, false, null);
 	this.getFLO = new Datapoint("Aktueller Durchfluss", nbr, "l/min", 0, 110, 0, false, null);
+	this.getPRS = new Datapoint("Wasserdruck", nbr, "bar", 0, 10, 0, false, null);
 	this.getCEL = new Datapoint("Wassertemperatur", nbr, "°C", 0, 100, 0, false, null);
 	this.getBSI = new Datapoint("", str, "", null, null, null, false, null);
 	this.getAVO = new Datapoint("", nbr, "ml", 0, null, 0, false, null);
@@ -111,7 +112,7 @@ const LexPlus10SL = function (id, name) {
 			return val * 50;
 		}
 		//Wassertemperatur wird als 10fache Menge übermittelt, muss aber als float gespeichert werden
-		if (id == "getCEL") {
+		if (id == "getPRS" || id == "getCEL") {
 			return val / 10;
 		}
 		//In boolean konvertieren
@@ -143,7 +144,7 @@ const LexPlus10SL = function (id, name) {
 		if (id == "getLE") {
 			return val / 50;
 		}
-		if (id == "geCEL") {
+		if (id == "getPRS" || id == "geCEL") {
 			return val * 10;
 		}
 		//DPs vom type boolean
