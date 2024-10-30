@@ -74,6 +74,11 @@ Für einen Apache-Webserver auf dem gleichen Server, auf dem auch iobroker läuf
 </Location>
 ```
 
+## Unterstützte Geräte
+
+-   Lex10
+-   LexPlus10SL
+
 ## TODOs
 
 -   Weitere Geräte implementieren
