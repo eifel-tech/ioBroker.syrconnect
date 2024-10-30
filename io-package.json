@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "syrconnect",
-		"version": "1.0.1",
+		"version": "1.1.0",
 		"news": {
+			"1.1.0": {
+				"en": "Device added: LEXplus10SL",
+				"de": "Gerät hinzugefügt: LEXplus10SL",
+				"ru": "Добавлено устройство: LEXplus10SL",
+				"pt": "Dispositivo adicionado: LEXplus10SL",
+				"nl": "Apparaat toegevoegd: LEXplus10SL",
+				"fr": "Appareil ajouté: LEXplus10SL",
+				"it": "Dispositivo aggiunto: LEXplus10SL",
+				"es": "Dispositivo añadido: LEXplus10SL",
+				"pl": "Dodano urządzenie: LEXplus10SL",
+				"uk": "Додано пристрій: LEXplus10SL",
+				"zh-cn": "添加设备: LEX+10SL"
+			},
 			"1.0.1": {
 				"en": "Actual adapter structure",
 				"de": "Aktuelle Adapterstruktur",

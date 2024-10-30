@@ -43,7 +43,7 @@ sudo setcap 'cap_net_bind_service=+ep' `which node`
 
 Folgendes ist zu beachten:
 
--   Man erlaubt mit dieser Methode, alle Ports <1024 nach außen zu öffnen. Es muss in der Adapterinstanz nur der entsprechende Port eingetragen werden. Daher muss sichergestellt werden, dass der iobroker-Server **nicht** aus dem Internet erreichbar ist, sonst ist u.U. ein Zugriff über den konfigurierten Port möglich. **Daher ist diese Methode nicht zu empfehlen, es sei denn, man weiß, was man tut**
+-   Man erlaubt mit dieser Methode, alle Ports <1024 nach außen zu öffnen. Es muss in der Adapterinstanz nur der entsprechende Port eingetragen werden. Daher muss sichergestellt werden, dass der iobroker-Server **nicht** aus dem Internet erreichbar ist, sonst ist u.U. ein Zugriff über den konfigurierten Port möglich. **Daher ist diese Methode nicht zu empfehlen, es sei denn, man weiß, was man tut!**
 -   Der Befehl muss nach einem Update der Node-Version erneut ausgeführt werden.
 
 ## Umrouten mit iptables
@@ -65,10 +65,10 @@ Für einen Apache-Webserver auf dem gleichen Server, auf dem auch iobroker läuf
 ```
 <Location /WebServices/SyrConnectLimexWebService.asmx/>
 	Require ip 127.0.0.1 ::1
-    Require host localhost
-    Require ip <lokale IP des Syr-Geräts>
+   Require host localhost
+   Require ip <lokale IP des Syr-Geräts>
 
-    RewriteEngine on
+   RewriteEngine on
 	RewriteCond %{REQUEST_URI} ^\/WebServices\/SyrConnectLimexWebService\.asmx\/(.*)$
     RewriteRule ^(.*)$ http://localhost:8090/%1 [QSA,P,L]
 </Location>
@@ -86,7 +86,7 @@ Für einen Apache-Webserver auf dem gleichen Server, auf dem auch iobroker läuf
   ### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 1.1.0 (2024-10-30)
 
 -   (eifel-tech) Abhängigkeit zum [iobroker Webserver](https://github.com/ioBroker/webserver) hinzugefügt
 -   (eifel-tech) Fehlerhandling verbessert
