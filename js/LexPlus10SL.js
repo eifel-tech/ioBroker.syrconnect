@@ -11,7 +11,7 @@ const LexPlus10SL = function (id, name) {
 	this.name = name;
 	this.getSRN = new Datapoint("Seriennummer", str, "", null, null, null, false, null);
 	this.getVER = new Datapoint("Firmware Version", str, "", null, null, null, false, null);
-	this.getTYP = new Datapoint("Gerätetyp", str, "", null, null, null, false, null);
+	this.getTYP = new Datapoint("Gerätetyp", nbr, "", null, null, null, false, null);
 	this.getCNA = new Datapoint("Gerätename", str, "", null, null, null, false, null);
 	this.getALM = new Datapoint("Alarm", str, "", null, null, null, false, null);
 	this.getAB = new Datapoint("Ventil", nbr, "", 1, 2, 1, true, { 1: "open", 2: "close" });
@@ -126,6 +126,11 @@ const LexPlus10SL = function (id, name) {
 			val = val.replace(/p.{1}l+ung/g, "pülung");
 			val = val.replace("langsame", "langsame Spülung");
 			return val;
+		}
+
+		//Einheit aus AVO entfernen
+		if (id == "getAVO" && typeof val === "string") {
+			val = Number(val.replace(/\D*/g, ""));
 		}
 
 		return val;

@@ -129,7 +129,7 @@ class Syrconnect extends utils.Adapter {
 	}
 
 	async createObjectWithState(dev, name, value) {
-		let obj;
+		let obj = {};
 		const dp = dev[name];
 		const id = dev.name + "." + dev.id + "." + name;
 		//String
@@ -165,6 +165,16 @@ class Syrconnect extends utils.Adapter {
 				native: {},
 			};
 
+			if (dp.min == null) {
+				delete obj.common.min;
+			}
+			if (dp.max == null) {
+				delete obj.common.max;
+			}
+			if (dp.def == null) {
+				delete obj.common.def;
+			}
+
 			if (dp.states) {
 				if (dp.states instanceof Object) {
 					obj.common.states = dp.states;
@@ -172,7 +182,6 @@ class Syrconnect extends utils.Adapter {
 					obj.common.states = eval("this." + dp.states);
 				}
 			}
-
 			//Boolean
 		} else if (dp.type == "boolean") {
 			obj = {
@@ -199,10 +208,8 @@ class Syrconnect extends utils.Adapter {
 			// @ts-ignore
 			this.setState(obj._id, value, true);
 
-			// @ts-ignore
 			this.log.debug("Object created: " + this.namespace + "." + obj._id);
 		} catch (e) {
-			// @ts-ignore
 			this.log.error("Object " + obj._id + " error on creation: " + e.message);
 		}
 	}
@@ -355,7 +362,7 @@ class Syrconnect extends utils.Adapter {
 				if (!this.devicesMap.has(ser)) {
 					if (name.toLowerCase() == "lex10") {
 						this.devicesMap.set(ser, new Lex10(ser, name));
-					} else if (name.toLowerCase() == "lex10plus10sl") {
+					} else if (name.toLowerCase() == "lexplus10sl") {
 						this.devicesMap.set(ser, new LexPlus10SL(ser, name));
 					}
 				}
