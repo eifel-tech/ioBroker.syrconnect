@@ -69,7 +69,7 @@ const LexPlus10SL = function (id, name) {
 	this.getAEF = new Datapoint("", str, "", null, null, null, false, null);
 	this.getUL = new Datapoint("Leckageschutzmodus", nbr, "", 0, 1, 0, true, { 0: "present", 1: "absent" });
 	this.getTC = new Datapoint("", str, "", null, null, null, false, null);
-	this.getNPS = new Datapoint("Anzahl Mikroleckagen", nbr, "", 0, null, 0, false, null);
+	this.getNPS = new Datapoint("Leckagemenge", nbr, "ml", 0, null, 0, false, null);
 	this.getTO = new Datapoint("", str, "", null, null, null, false, null);
 	this.getVLV = new Datapoint("Ventilstatus", nbr, "", 10, 21, 20, false, {
 		10: "closed",
@@ -111,8 +111,8 @@ const LexPlus10SL = function (id, name) {
 		if (id == "getLE") {
 			return val * 50;
 		}
-		//Wassertemperatur wird als 10fache Menge übermittelt, muss aber als float gespeichert werden
-		if (id == "getPRS" || id == "getCEL") {
+		//Werte werden als 10fache Menge übermittelt
+		if (id == "getPRS" || id == "getCEL" || id == "getNPS") {
 			return val / 10;
 		}
 		//In boolean konvertieren
@@ -144,7 +144,7 @@ const LexPlus10SL = function (id, name) {
 		if (id == "getLE") {
 			return val / 50;
 		}
-		if (id == "getPRS" || id == "geCEL") {
+		if (id == "getPRS" || id == "geCEL" || id == "getNPS") {
 			return val * 10;
 		}
 		//DPs vom type boolean
