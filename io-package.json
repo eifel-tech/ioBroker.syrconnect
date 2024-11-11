@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "syrconnect",
-		"version": "1.1.0",
+		"version": "1.1.1",
 		"news": {
+			"1.1.1": {
+				"en": "Parsing more dates of LEXplus10SL",
+				"de": "Mehr Daten von LEXplus10SL",
+				"ru": "Парирование больше дат LEXplus10SL",
+				"pt": "Parsing mais datas de LEXplus10SL",
+				"nl": "Meer data van LEXplus10SL ontleden",
+				"fr": "Parsing plus de dates de LEXplus10SL",
+				"it": "Parsing più date di LEXplus10SL",
+				"es": "Paseando más fechas de LEXplus10SL",
+				"pl": "Parsing more dates of LEXplus10SL",
+				"uk": "Більше дат LEXplus10SL",
+				"zh-cn": "分析更多 LEX+10SL 的日期"
+			},
 			"1.1.0": {
 				"en": "Device added: LEXplus10SL",
 				"de": "Gerät hinzugefügt: LEXplus10SL",

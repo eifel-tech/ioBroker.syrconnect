@@ -90,8 +90,7 @@ Für einen Apache-Webserver auf dem gleichen Server, auf dem auch iobroker läuf
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 1.1.1 (2024-11-11)
 
 -   (eifel-tech) Gesendete Daten bei LEXplus10SL geändert (Issue 194)
 
