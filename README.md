@@ -91,6 +91,10 @@ Für einen Apache-Webserver auf dem gleichen Server, auf dem auch iobroker läuf
   ### **WORK IN PROGRESS**
 -->
 
+### **WORK IN PROGRESS**
+
+-   (eifel-tech) Gesendete Daten bei LEXplus10SL geändert (Issue 194)
+
 ### 1.1.0 (2024-10-30)
 
 -   (eifel-tech) Abhängigkeit zum [iobroker Webserver](https://github.com/ioBroker/webserver) hinzugefügt
