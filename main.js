@@ -10,8 +10,8 @@ const { WebServer } = require("@iobroker/webserver");
 const xml = require("xml2js");
 
 //Geräte
-const Lex10 = require("./js/Lex10.js");
-const LexPlus10SL = require("./js/LexPlus10SL.js");
+const Lex10 = require("./lib/Lex10.js");
+const LexPlus10SL = require("./lib/LexPlus10SL.js");
 
 class Syrconnect extends utils.Adapter {
 	/**
@@ -131,6 +131,25 @@ class Syrconnect extends utils.Adapter {
 	async createObjectWithState(dev, name, value) {
 		let obj = {};
 		const dp = dev[name];
+
+		//Root-Knoten
+		await this.setObjectNotExistsAsync(dev.name, {
+			type: "device",
+			common: {
+				name: "Device",
+			},
+			native: {},
+		});
+
+		//Serial des Gerätes
+		await this.setObjectNotExistsAsync(dev.name + "." + dev.id, {
+			type: "channel",
+			common: {
+				name: dev.name,
+			},
+			native: {},
+		});
+
 		const id = dev.name + "." + dev.id + "." + name;
 		//String
 		if (dp.type == "string") {
@@ -140,7 +159,7 @@ class Syrconnect extends utils.Adapter {
 				common: {
 					name: dp.label,
 					type: dp.type,
-					role: "value",
+					role: "text",
 					read: true,
 					write: dp.writable,
 				},
@@ -158,7 +177,7 @@ class Syrconnect extends utils.Adapter {
 					min: dp.min,
 					max: dp.max,
 					def: dp.def,
-					role: "value",
+					role: dp.writable ? "level" : "value",
 					read: true,
 					write: dp.writable,
 				},
@@ -191,7 +210,7 @@ class Syrconnect extends utils.Adapter {
 					name: dp.label,
 					type: dp.type,
 					def: dp.def,
-					role: "switch",
+					role: dp.writable ? "switch" : "indicator",
 					read: true,
 					write: dp.writable,
 				},
@@ -310,7 +329,7 @@ class Syrconnect extends utils.Adapter {
 				const device = await _this.getDevice(json);
 				if (device) {
 					for (let i = 0; i < json.length; i++) {
-						const id = json[i].$.n;
+						const id = json[i].$.n.replace(_this.FORBIDDEN_CHARS, "_");
 
 						const newVal = device.convertToGUI(id, json[i].$.v);
 
