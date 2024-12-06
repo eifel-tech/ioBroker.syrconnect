@@ -24,7 +24,7 @@
   "dependencies": {
     "@iobroker/adapter-core": "^3.2.2",
     "@iobroker/webserver": "^1.0.6",
-    "express": "^4.21.1",
+    "express": "^4.21.2",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
