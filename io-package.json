@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "syrconnect",
-		"version": "1.1.1",
+		"version": "1.1.2",
 		"news": {
+			"1.1.2": {
+				"en": "Adhere to iobroker specifications",
+				"de": "Anpassen auf iobroker Spezifikationen",
+				"ru": "Присоединиться к спецификациям iobroker",
+				"pt": "Adhere para iobroker especificações",
+				"nl": "Adhere to iobroker specifics",
+				"fr": "Adhérer aux spécifications d'iobroker",
+				"it": "Specifiche dello iobroker",
+				"es": "Adhere to iobrokerespecificaciones",
+				"pl": "Dopasowanie do specyfikacji iobrokera",
+				"uk": "Adhere до iobroker специфікація",
+				"zh-cn": "遵守碘经纪人的规格"
+			},
 			"1.1.1": {
 				"en": "Parsing more dates of LEXplus10SL",
 				"de": "Mehr Daten von LEXplus10SL",
