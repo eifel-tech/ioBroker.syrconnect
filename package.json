@@ -10,9 +10,10 @@
   "license": "MIT",
   "keywords": [
     "ioBroker",
-    "template",
-    "Smart Home",
-    "home automation"
+    "SYR",
+    "local",
+    "cloudless",
+    "syrconnect"
   ],
   "repository": {
     "type": "git",
