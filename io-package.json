@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "syrconnect",
-		"version": "1.1.2",
+		"version": "1.1.3",
 		"news": {
+			"1.1.3": {
+				"en": "Changed type of Port in Amdin to number",
+				"de": "Typ von Port in Amdin geändert zu Nummer",
+				"ru": "Изменение типа порта в Амдине по количеству",
+				"pt": "Tipo alterado de Porto em Amdin para número",
+				"nl": "Soort poort in Amdin in getal veranderd",
+				"fr": "Type changé de port dans Amdin en nombre",
+				"it": "Cambiato tipo di Porto in Amdin al numero",
+				"es": "Tipo de puerto cambiado en Amdin a número",
+				"pl": "Zmiana typu portu w Amdin na liczbę",
+				"uk": "Змінений тип порту в Амдіні на номер",
+				"zh-cn": "Amdin 的端口类型更改为编号"
+			},
 			"1.1.2": {
 				"en": "Adhere to iobroker specifications",
 				"de": "Anpassen auf iobroker Spezifikationen",
