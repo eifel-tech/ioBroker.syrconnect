@@ -121,6 +121,26 @@
 	"objects": [],
 	"instanceObjects": [
 		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": {
+					"en": "Information",
+					"de": "Information",
+					"ru": "Информация",
+					"pt": "Informação",
+					"nl": "Informatie",
+					"fr": "Informations",
+					"it": "Informazioni",
+					"es": "Información",
+					"pl": "Informacje",
+					"uk": "Інформація",
+					"zh-cn": "资料"
+				}
+			},
+			"native": {}
+		},
+		{
 			"_id": "info.connection",
 			"type": "state",
 			"common": {

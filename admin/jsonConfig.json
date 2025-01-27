@@ -17,7 +17,7 @@
 			"md": 6,
 			"lg": 4,
 			"xl": 4,
-			"type": "text",
+			"type": "number",
 			"label": "Port"
 		}
 	}
