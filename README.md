@@ -28,8 +28,7 @@ which serves as a new target for the Connect devices (e.g. Lex10).
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 1.1.4 (2025-01-27)
 
 - (eifel-tech) Update dependencies
 
