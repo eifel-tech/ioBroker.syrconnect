@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "syrconnect",
-		"version": "1.1.4",
+		"version": "1.2.0",
 		"news": {
+			"1.2.0": {
+				"en": "Admin-Version >= 7.4.10",
+				"de": "Admin-Version >= 7.4.10",
+				"ru": "Администрирование >= 7.4.10",
+				"pt": "Admin-Version >= 7.4.10",
+				"nl": "Voor de toepassing van deze onderverdeling wordt verstaan onder:",
+				"fr": "Version administrative >= 7.4.10",
+				"it": "Admin-Versione >= 7.4.10",
+				"es": "Admin-Version √= 7.4.10",
+				"pl": "Wersja administracyjna > = 7.4.10",
+				"uk": "Admin-Version >= 7.4.10",
+				"zh-cn": "行政部门 ___________________________________________________________________________"
+			},
 			"1.1.4": {
 				"en": "Update dependencies",
 				"de": "Abhängigkeiten aktualisieren",
