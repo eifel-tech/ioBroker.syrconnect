@@ -28,6 +28,11 @@ which serves as a new target for the Connect devices (e.g. Lex10).
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+- (eifel-tech) Admin-Version >= 7.4.10
+
 ### 1.1.4 (2025-01-27)
 
 - (eifel-tech) Update dependencies
