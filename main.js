@@ -5,8 +5,6 @@
 const utils = require("@iobroker/adapter-core");
 
 const express = require("express");
-const { WebServer } = require("@iobroker/webserver");
-
 const xml = require("xml2js");
 
 //Geräte
@@ -261,7 +259,6 @@ class Syrconnect extends utils.Adapter {
 	}
 
 	async initWebServer(settings) {
-		this.server = null;
 		const app = express();
 
 		// for parsing application/x-www-form-urlencoded
@@ -281,16 +278,12 @@ class Syrconnect extends utils.Adapter {
 			this.allCommands(req, res);
 		});
 
-		const webServer = new WebServer({ app: app, adapter: this, secure: false });
-		const server = await webServer.init();
-
-		server.listen(parseInt(settings.webport, 10) || 8090, settings.host, () => {
+		this.server = app.listen(parseInt(settings.webport, 10) || 8090, settings.host, () => {
 			this.log.info("Webserver started listening on " + settings.host + ":" + settings.webport);
-			this.server = server;
 			this.setState("info.connection", true, true);
 		});
 
-		server.on("error", (e) => {
+		this.server.on("error", (e) => {
 			//https://stackoverflow.com/questions/9164915/node-js-eacces-error-when-listening-on-most-ports
 			if (e.toString().includes("EACCES") && settings.webport <= 1024) {
 				this.log.error(
