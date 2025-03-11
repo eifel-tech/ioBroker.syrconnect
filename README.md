@@ -28,8 +28,7 @@ which serves as a new target for the Connect devices (e.g. Lex10).
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 1.2.1 (2025-03-11)
 
 - (eifel-tech) Remove dependency to iobroker webserver
 
