@@ -12,6 +12,8 @@ updates:
       time: "04:00"
       timezone: Europe/Berlin
     versioning-strategy: increase
+    cooldown:
+          default-days: 7
 
   - package-ecosystem: github-actions
     directory: "/"
