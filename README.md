@@ -67,6 +67,8 @@ which serves as a new target for the Connect devices (e.g. Lex10).
 
 - (eifel-tech) initial release
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 
 MIT License
